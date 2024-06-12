@@ -788,3 +788,63 @@
     display: inline-block;
     animation: upDown 2s ease-in-out infinite;
 }
+
+
+/* approach page */
+
+.owl-carousel .owl-stage-outer {
+    display: flex;
+}
+
+.owl-carousel .owl-stage {
+    display: flex;
+}
+
+.owl-carousel .owl-item {
+    display: flex;
+    align-items: stretch;
+}
+
+.testimonial-item-wrapper {
+    display: flex;
+    flex: 1;
+}
+
+.testimonial-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.bgColor {
+    background-image: url('../images/wave.jpg');
+    background-size: cover;
+    /* Cover the entire background */
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+    /* Prevent repetition */
+}
+
+.marketingbg {
+    background-image: url('../images/marketingbg.avif');
+    background-size: cover;
+    /* Cover the entire background */
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+}
+
+.performancebg {
+    background-image: url('../images/performancewave2.jpg');
+    background-size: cover;
+    /* Cover the entire background */
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+}
+
+.emailBg {
+    background-color: #EEEEEE;
+}
