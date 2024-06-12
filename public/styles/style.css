@@ -620,12 +620,10 @@
 
 .owl-item.center .testimonial-item,
 .testimonial-item:hover {
-    background: var(--primary);
-}
-
-.owl-item.center .testimonial-item *,
-.testimonial-item:hover * {
-    color: #FFFFFF !important;
+    background: #A7E6FF;
+    color: #000000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border: none;
 }
 
 .testimonial-item img {
@@ -761,12 +759,12 @@
 .hover-effect {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(to bottom left, transparent 50%, #12c5dd 50%);
+    background: linear-gradient(to bottom left, transparent 50%, #A7E6FF 50%);
     transition: background 0.5s ease;
 }
 
 .hover-effect:hover {
-    background: linear-gradient(to bottom left, #00a2ff 50%, transparent 50%);
+    background: linear-gradient(to bottom left, #A7E6FF 50%, transparent 50%);
 }
 
 
@@ -837,7 +835,7 @@
 }
 
 .performancebg {
-    background-image: url('../images/performancewave2.jpg');
+    background-image: url('../images/perform5.avif');
     background-size: cover;
     /* Cover the entire background */
     background-position: center;

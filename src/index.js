@@ -62,6 +62,30 @@ app.get("/marketing", (req, res) => {
 app.get("/performance", (req, res) => {
     res.render("performance", { title: "Performance" });
 });
+// footer pages
+app.get("/privacy-policy", (req, res) => {
+    res.render("privacy-policy", { title: "Privacy Policy" });
+});
+app.get("/GDPR", (req, res) => {
+    res.render("GDPR", { title: "GDPR" });
+});
+app.get("/CCPA", (req, res) => {
+    res.render("CCPA", { title: "CCPA" });
+});
+app.get("/terms-condition", (req, res) => {
+    res.render("terms-condition", { title: "terms-condition" });
+});
+app.get("/cookies", (req, res) => {
+    res.render("cookies", { title: "cookies" });
+});
+app.get("/case-studies", (req, res) => {
+    res.render("case-studies", { title: "case-studies" });
+});
+app.get("/media-kit", (req, res) => {
+    res.render("media-kit", { title: "media-kit" });
+});
+
+
 
 
 
