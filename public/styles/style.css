@@ -204,10 +204,12 @@
     outline: none;
 }
 
+
+/* 
 .navbar .navbar-nav .nav-link:hover,
 .navbar .navbar-nav .nav-link.active {
     color: var(--primary);
-}
+} */
 
 .navbar .dropdown-toggle::after {
     border: none;
@@ -845,4 +847,15 @@
 
 .emailBg {
     background-color: #EEEEEE;
+}
+
+
+/* blog page*/
+
+.blogHover:hover {
+    background-color: #A7E6FF;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }

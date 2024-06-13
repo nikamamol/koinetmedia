@@ -28,7 +28,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-    res.render("home");
+    res.render("home", { title: "Home" });
 });
 
 app.get("/services", (req, res) => {
@@ -37,6 +37,10 @@ app.get("/services", (req, res) => {
 
 app.get("/blog", (req, res) => {
     res.render("blog", { title: "Blog" });
+});
+app.get('/viewblog/:id', (req, res) => {
+    const blogId = req.params.id;
+    res.render('viewblog', { title: 'View Blog', blogId });
 });
 
 app.get("/about", (req, res) => {
@@ -84,10 +88,6 @@ app.get("/case-studies", (req, res) => {
 app.get("/media-kit", (req, res) => {
     res.render("media-kit", { title: "media-kit" });
 });
-
-
-
-
 
 app.set("view engine", "hbs");
 app.set("views", static_path);
