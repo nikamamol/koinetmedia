@@ -48,6 +48,20 @@ const getAllBlogPosts = (callback) => {
         }
     });
 };
+const getBlogPostById = (id, callback) => {
+    connection.query('SELECT * FROM blog WHERE id = ?', [id], (err, rows) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            if (rows.length > 0) {
+                callback(null, rows[0]); // Assuming id is unique, return the first (and only) result
+            } else {
+                callback(new Error('Blog post not found'), null);
+            }
+        }
+    });
+};
+
 
 // Function to add a new blog post
 const addBlogPost = (postData, callback) => {
@@ -66,7 +80,7 @@ const addBlogPost = (postData, callback) => {
 //update blog 
 const updateBlogPost = (data, callback) => {
     connection.query(
-        "UPDATE blog SET title = ?, content = ? , author = ? , imagePath = ? , WHERE id = ?",
+        "UPDATE blog SET title = ?, content = ?, author = ?, imagePath = ? WHERE id = ?",
         data,
         (err, result) => {
             if (err) {
@@ -117,4 +131,5 @@ module.exports = {
     updateBlogPost: updateBlogPost,
     addUser: addUser,
     loginUser: loginUser,
+    getBlogPostById: getBlogPostById,
 };

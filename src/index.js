@@ -152,6 +152,20 @@ app.get("/getBlog", (req, res) => {
     });
 });
 
+app.get('/viewblog/:id', (req, res) => {
+    const blogId = req.params.id;
+    connection.query('SELECT * FROM blog WHERE id = ?', [blogId], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: 'Error fetching blog post' });
+        } else {
+            if (rows.length > 0) {
+                res.render('viewblog', { post: rows[0] });
+            } else {
+                res.status(404).json({ error: 'Blog post not found' });
+            }
+        }
+    });
+});
 // Add a new blog post
 app.post("/postBlog", (req, res) => {
     const postData = req.body;
@@ -221,18 +235,19 @@ app.put("/updateBlog/:id", (req, res) => {
         req.body.title,
         req.body.content,
         req.body.author,
+        req.body.imagePath,
         req.params.id,
     ];
 
     db.updateBlogPost(data, (err, result) => {
         if (err) {
+            console.error('Error updating blog post:', err);
             res.status(500).send("Error updating blog post");
         } else {
             res.status(200).send("Blog post updated successfully");
         }
     });
 });
-
 //add user
 // Add a new user registration endpoint
 app.post("/register", (req, res) => {
