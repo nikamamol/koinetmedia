@@ -874,3 +874,41 @@
     background-color: #49d6e0b2;
     color: black;
 }
+
+
+/* services */
+
+.multiBg {
+    background-image: url('../images/s6.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.contactdiscoveryBg {
+    background-image: url('../images/s10.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.dataappendBg {
+    background-image: url('../images/d11.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.socialBg {
+    background-image: url('../images/sm1.avif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.acountBg {
+    background-image: url('../images/acbg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

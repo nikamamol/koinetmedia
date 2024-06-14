@@ -38,6 +38,7 @@ app.get("/services", (req, res) => {
     res.render("services", { title: "Services" });
 });
 
+
 app.get("/blog", (req, res) => {
     res.render("blog", { title: "Blog" });
 });
@@ -93,6 +94,38 @@ app.get("/case-studies", (req, res) => {
 });
 app.get("/media-kit", (req, res) => {
     res.render("media-kit", { title: "media-kit" });
+});
+//services pages
+
+app.get("/multichannellead", (req, res) => {
+    res.render("multichannellead", { title: "MULTI CHANNEL LEAD" });
+});
+app.get("/s2_contactdiscovery", (req, res) => {
+    res.render("s2_contactdiscovery", { title: "Contact Discovery" });
+});
+app.get("/s3_emailmarketing", (req, res) => {
+    res.render("s3_emailmarketing", { title: "Email Marketing" });
+});
+app.get("/dataappend", (req, res) => {
+    res.render("dataappend", { title: "Data Append & Cleansing" });
+});
+app.get("/demandgeneration", (req, res) => {
+    res.render("demandgeneration", { title: "Demand Generation" });
+});
+app.get("/s4_socialmedia", (req, res) => {
+    res.render("s4_socialmedia", { title: "Social Media Marketing" });
+});
+app.get("/s5_accountmarketing", (req, res) => {
+    res.render("s5_accountmarketing", { title: "Account Marketing" });
+});
+app.get("/s6_appointment", (req, res) => {
+    res.render("s6_appointment", { title: "Appointment " });
+});
+app.get("/s7_accountprofiling", (req, res) => {
+    res.render("s7_accountprofiling", { title: "Account Profiling" });
+});
+app.get("/s8_seo", (req, res) => {
+    res.render("s8_seo", { title: "Search Engine Optimization" });
 });
 
 app.set("view engine", "hbs");
