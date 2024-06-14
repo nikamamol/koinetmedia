@@ -859,3 +859,18 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.sticky-icons {
+    position: -webkit-sticky;
+    /* Safari */
+    position: sticky;
+    top: 200px;
+    margin-left: 170px;
+    /* Adjust if necessary */
+}
+
+.hover_btn:hover {
+    border-radius: 40px;
+    background-color: #49d6e0b2;
+    color: black;
+}

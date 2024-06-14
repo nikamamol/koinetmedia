@@ -51,7 +51,10 @@ const getAllBlogPosts = (callback) => {
 
 // Function to add a new blog post
 const addBlogPost = (postData, callback) => {
-    connection.query("INSERT INTO blog SET ?", postData, (err, result) => {
+    const sql = "INSERT INTO blog (title, content, imagePath, author) VALUES (?, ?, ?, ?)";
+    const values = [postData.title, postData.content, postData.imagePath, postData.author];
+
+    connection.query(sql, values, (err, result) => {
         if (err) {
             callback(err, null);
         } else {
@@ -59,10 +62,11 @@ const addBlogPost = (postData, callback) => {
         }
     });
 };
+
 //update blog 
 const updateBlogPost = (data, callback) => {
     connection.query(
-        "UPDATE blog SET title = ?, content = ? , author = ? WHERE id = ?",
+        "UPDATE blog SET title = ?, content = ? , author = ? , imagePath = ? , WHERE id = ?",
         data,
         (err, result) => {
             if (err) {

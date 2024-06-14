@@ -8,6 +8,8 @@ const partials_path = path.join(__dirname, "../views/partials");
 const db = require("../src/database/config.js");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const fileUpload = require('express-fileupload');
+const fs = require('fs');
 const secretKey =
     "pLud5OFaXkEa-8FrVYVnB3aZimVULT10fJapm-5vlKPnihgVUkJ3TFK_QqREbCkw";
 
@@ -20,6 +22,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(fileUpload());
 
 app.use(
     express.urlencoded({
@@ -37,6 +40,9 @@ app.get("/services", (req, res) => {
 
 app.get("/blog", (req, res) => {
     res.render("blog", { title: "Blog" });
+});
+app.get("/addblog", (req, res) => {
+    res.render("addblog", { title: "Add Blog" });
 });
 app.get('/viewblog/:id', (req, res) => {
     const blogId = req.params.id;
@@ -149,14 +155,50 @@ app.get("/getBlog", (req, res) => {
 // Add a new blog post
 app.post("/postBlog", (req, res) => {
     const postData = req.body;
-    db.addBlogPost(postData, (err, result) => {
-        if (err) {
-            res.status(500).send("Error adding blog post");
-        } else {
-            res.status(201).send("Blog post added successfully");
-        }
-    });
+
+    if (req.files && req.files.image) {
+        const image = req.files.image;
+        const uploadDir = path.join(__dirname, 'uploads');
+        const uploadPath = path.join(uploadDir, image.name);
+
+        // Ensure the uploads directory exists
+        fs.mkdir(uploadDir, { recursive: true }, (err) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+
+            // Move the uploaded file to the uploads directory
+            image.mv(uploadPath, (err) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                // Add the image path to postData
+                postData.imagePath = uploadPath;
+
+                db.addBlogPost(postData, (err, result) => {
+                    if (err) {
+                        res.status(500).send("Error adding blog post");
+                    } else {
+                        res.status(201).send("Blog post added successfully");
+                    }
+                });
+            });
+        });
+    } else if (postData.imagePath) {
+        // Use the provided image URL
+        db.addBlogPost(postData, (err, result) => {
+            if (err) {
+                res.status(500).send("Error adding blog post");
+            } else {
+                res.status(201).send("Blog post added successfully");
+            }
+        });
+    } else {
+        res.status(400).send('No image uploaded or URL provided');
+    }
 });
+
+
 
 // app.post("/postBlog", verifyToken, (req, res) => {
 //     if (req.user && req.user.role === 'admin') {
