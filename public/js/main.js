@@ -132,13 +132,13 @@ document
 async function submitForm() {
     const form = document.getElementById("registrationForm");
     const formData = new FormData(form);
-
     const data = {
         firstName: formData.get("firstName"),
         lastName: formData.get("lastName"),
         email: formData.get("email"),
         password: formData.get("password"),
         phone: formData.get("phone"),
+        role: formData.get("role"),
     };
 
     try {
@@ -154,6 +154,7 @@ async function submitForm() {
 
         if (response.ok) {
             alert(result.message);
+
         } else {
             alert(result.message || "Error registering user.");
         }
@@ -161,7 +162,7 @@ async function submitForm() {
         console.error("Error:", error);
         alert("Error registering user.");
     }
-    form.reset();
+
 }
 
 // //login user

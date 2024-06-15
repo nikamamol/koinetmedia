@@ -8,8 +8,8 @@ const partials_path = path.join(__dirname, "../views/partials");
 const db = require("../src/database/config.js");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const fileUpload = require('express-fileupload');
-const fs = require('fs');
+const fileUpload = require("express-fileupload");
+const fs = require("fs");
 const secretKey =
     "pLud5OFaXkEa-8FrVYVnB3aZimVULT10fJapm-5vlKPnihgVUkJ3TFK_QqREbCkw";
 
@@ -38,16 +38,15 @@ app.get("/services", (req, res) => {
     res.render("services", { title: "Services" });
 });
 
-
 app.get("/blog", (req, res) => {
     res.render("blog", { title: "Blog" });
 });
 app.get("/addblog", (req, res) => {
     res.render("addblog", { title: "Add Blog" });
 });
-app.get('/viewblog/:id', (req, res) => {
+app.get("/viewblog/:id", (req, res) => {
     const blogId = req.params.id;
-    res.render('viewblog', { title: 'View Blog', blogId });
+    res.render("viewblog", { title: "View Blog", blogId });
 });
 
 app.get("/about", (req, res) => {
@@ -148,10 +147,7 @@ app.use("/lib", express.static(path.join(__dirname, "../public/lib"))); // Add t
 hbs.registerPartials(partials_path);
 app.use(express.urlencoded({ extended: false }));
 
-// // Get all entries from contact_form
-// app.use(cors({
-//     origin: "*"
-// }));
+
 app.get("/getContact", (req, res) => {
     db.getAllContactFormEntries((err, entries) => {
         if (err) {
@@ -185,82 +181,30 @@ app.get("/getBlog", (req, res) => {
     });
 });
 
-app.get('/viewblog/:id', (req, res) => {
+app.get("/viewblog/:id", (req, res) => {
     const blogId = req.params.id;
-    connection.query('SELECT * FROM blog WHERE id = ?', [blogId], (err, rows) => {
+    connection.query("SELECT * FROM blog WHERE id = ?", [blogId], (err, rows) => {
         if (err) {
-            res.status(500).json({ error: 'Error fetching blog post' });
+            res.status(500).json({ error: "Error fetching blog post" });
         } else {
             if (rows.length > 0) {
-                res.render('viewblog', { post: rows[0] });
+                res.render("viewblog", { post: rows[0] });
             } else {
-                res.status(404).json({ error: 'Blog post not found' });
+                res.status(404).json({ error: "Blog post not found" });
             }
         }
     });
 });
-// Add a new blog post
-app.post("/postBlog", (req, res) => {
+app.post("/addblogpost", (req, res) => {
     const postData = req.body;
-
-    if (req.files && req.files.image) {
-        const image = req.files.image;
-        const uploadDir = path.join(__dirname, 'uploads');
-        const uploadPath = path.join(uploadDir, image.name);
-
-        // Ensure the uploads directory exists
-        fs.mkdir(uploadDir, { recursive: true }, (err) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-
-            // Move the uploaded file to the uploads directory
-            image.mv(uploadPath, (err) => {
-                if (err) {
-                    return res.status(500).send(err);
-                }
-                // Add the image path to postData
-                postData.imagePath = uploadPath;
-
-                db.addBlogPost(postData, (err, result) => {
-                    if (err) {
-                        res.status(500).send("Error adding blog post");
-                    } else {
-                        res.status(201).send("Blog post added successfully");
-                    }
-                });
-            });
-        });
-    } else if (postData.imagePath) {
-        // Use the provided image URL
-        db.addBlogPost(postData, (err, result) => {
-            if (err) {
-                res.status(500).send("Error adding blog post");
-            } else {
-                res.status(201).send("Blog post added successfully");
-            }
-        });
-    } else {
-        res.status(400).send('No image uploaded or URL provided');
-    }
+    db.addBlogPost(postData, (err, result) => {
+        if (err) {
+            res.status(500).send("Error adding blog post");
+        } else {
+            res.status(201).send("Blog post added successfully");
+        }
+    });
 });
-
-
-
-// app.post("/postBlog", verifyToken, (req, res) => {
-//     if (req.user && req.user.role === 'admin') {
-//         const postData = req.body;
-//         db.addBlogPost(postData, (err, result) => {
-//             if (err) {
-//                 res.status(500).send("Error adding blog post");
-//             } else {
-//                 res.status(201).send("Blog post added successfully");
-//             }
-//         });
-//     } else {
-//         res.status(403).send("Unauthorized");
-//     }
-// });
 
 //update blog
 app.put("/updateBlog/:id", (req, res) => {
@@ -274,7 +218,7 @@ app.put("/updateBlog/:id", (req, res) => {
 
     db.updateBlogPost(data, (err, result) => {
         if (err) {
-            console.error('Error updating blog post:', err);
+            console.error("Error updating blog post:", err);
             res.status(500).send("Error updating blog post");
         } else {
             res.status(200).send("Blog post updated successfully");

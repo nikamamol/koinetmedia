@@ -20,7 +20,9 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"
+    ></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="lib/animate/animate.min.css" rel="stylesheet" />
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
@@ -28,7 +30,7 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link rel="stylesheet" href="../public/styles/style.css" />
     <!-- Replace with your actual site key -->
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </head>
   <body>
     <div class="container">
@@ -94,7 +96,18 @@
                   name="phone"
                 />
               </div>
-             <div class="g-recaptcha" data-sitekey="6Ld3OPYpAAAAAEFwTbe61yzBBwg07nogKwTY82iu"></div>
+              <div class="mb-2">
+                <label for="role" class="form-label">Role</label>
+                <select class="form-control" id="role" name="role" required>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                  <option value="moderator">Moderator</option>
+                </select>
+              </div>
+              <div
+                class="g-recaptcha"
+                data-sitekey="6Ld3OPYpAAAAAEFwTbe61yzBBwg07nogKwTY82iu"
+              ></div>
               <div class="text-center mt-3">
                 <button
                   type="submit"
@@ -112,48 +125,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script>
-      
-async function submitForm() {
-    const form = document.getElementById("registrationForm");
-    const formData = new FormData(form);
-
-    const data = {
-        firstName: formData.get("firstName"),
-        lastName: formData.get("lastName"),
-        email: formData.get("email"),
-        password: formData.get("password"),
-        phone: formData.get("phone"),
-    };
-
-    try {
-        const response = await fetch("/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            alert(result.message);
-        } else {
-            alert(result.message || "Error registering user.");
-        }
-    } catch (error) {
-        console.error("Error:", error);
-        alert("Error registering user.");
-    }
-    form.reset();
-}
-
-      function onClick(e) { e.preventDefault();
-      grecaptcha.enterprise.ready(async () => { const token = await
-      grecaptcha.enterprise.execute('6LcF9vQpAAAAAHPu_C25r38bta55cHwbHMtlZ_kl',
-      {action: 'Register'}); }); }
-    </script>
+    
     <script src="/public/js/main.js"></script>
 
   </body>

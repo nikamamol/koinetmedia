@@ -64,19 +64,21 @@ const getBlogPostById = (id, callback) => {
 
 
 // Function to add a new blog post
+// Function to add blog post to MySQL
 const addBlogPost = (postData, callback) => {
-    const sql = "INSERT INTO blog (title, content, imagePath, author) VALUES (?, ?, ?, ?)";
-    const values = [postData.title, postData.content, postData.imagePath, postData.author];
+    const sql = 'INSERT INTO posts (content) VALUES (?)';
+    const values = [postData.content]; // Assuming postData has a 'content' property
 
     connection.query(sql, values, (err, result) => {
         if (err) {
-            callback(err, null);
-        } else {
-            callback(null, result);
+            console.error('Error inserting into MySQL: ' + err.stack);
+            callback(err, null); // Pass error to callback
+            return;
         }
+        console.log('Inserted into MySQL with ID: ' + result.insertId);
+        callback(null, result.insertId); // Pass result to callback
     });
 };
-
 //update blog 
 const updateBlogPost = (data, callback) => {
     connection.query(
@@ -100,6 +102,7 @@ const addUser = (userData, callback) => {
         (err, result) => {
             if (err) {
                 callback(err, null);
+
             } else {
                 callback(null, result);
             }
