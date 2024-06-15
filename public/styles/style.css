@@ -692,7 +692,7 @@
 /* srvices */
 
 .page-service {
-    background-image: url('../images/contact-form.jpg');
+    background-image: url('../images/servicebg.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -908,6 +908,20 @@
 
 .acountBg {
     background-image: url('../images/acbg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.accountbg {
+    background-image: url('../images/acbg2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.seobg {
+    background-image: url('../images/seobg.avif');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
