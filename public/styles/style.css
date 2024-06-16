@@ -1,5 +1,14 @@
 /********** Template CSS **********/
 
+@import url('https://fonts.googleapis.com/css2?family=Reddit+Sans+Condensed:wght@200..900&display=swap');
+body {
+    font-family: "Reddit Sans Condensed", sans-serif;
+    font-optical-sizing: auto;
+    color: #002743;
+    /* font-weight: 500;
+    font-style: 300; */
+}
+
 :root {
     --primary: #4761FF;
     --secondary: #555555;

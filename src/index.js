@@ -10,6 +10,9 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const fileUpload = require("express-fileupload");
 const fs = require("fs");
+const nodemailer = require('nodemailer');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
 const secretKey =
     "pLud5OFaXkEa-8FrVYVnB3aZimVULT10fJapm-5vlKPnihgVUkJ3TFK_QqREbCkw";
 
@@ -146,7 +149,90 @@ app.use("/lib", express.static(path.join(__dirname, "../public/lib"))); // Add t
 
 hbs.registerPartials(partials_path);
 app.use(express.urlencoded({ extended: false }));
+app.use(fileUpload());
 
+// Serve static files
+// app.use("/public", express.static(path.join(__dirname, "../public")));
+
+// API endpoint for adding a blog post
+cloudinary.config({
+    cloud_name: 'didbp2ojb',
+    api_key: '697371988926662',
+    api_secret: 'SX--cbDmvT13Pi9HPQyciyTgs2A'
+});
+
+app.post('/api/addblog', (req, res) => {
+    const { title, category, content } = req.body;
+    let imageUrl = null;
+
+    // Handle file upload if there is a file
+    if (req.files && req.files.image) {
+        const image = req.files.image;
+
+        // Upload image to Cloudinary
+        cloudinary.uploader.upload(image.tempFilePath, (err, result) => {
+            if (err) {
+                console.error('Error uploading file to Cloudinary:', err);
+                return res.status(500).send('Error uploading file');
+            }
+            imageUrl = result.secure_url; // URL of the uploaded image on Cloudinary
+
+            // Insert into database after file upload
+            db.addBlogPost(title, category, content, imageUrl, (err, result) => {
+                if (err) {
+                    console.error('Error inserting blog post:', err);
+                    return res.status(500).json({ error: 'Error inserting blog post' });
+                }
+                res.status(200).json({ message: 'Blog created successfully', imageUrl });
+            });
+        });
+    } else if (req.body.imageUrl) {
+        // If imageUrl is provided in the request body directly
+        imageUrl = req.body.imageUrl;
+
+        db.addBlogPost(title, category, content, imageUrl, (err, result) => {
+            if (err) {
+                console.error('Error inserting blog post:', err);
+                return res.status(500).json({ error: 'Error inserting blog post' });
+            }
+            res.status(200).json({ message: 'Blog created successfully', imageUrl });
+        });
+    } else {
+        // Handle case where no file and no imageUrl provided
+        db.addBlogPost(title, category, content, imageUrl, (err, result) => {
+            if (err) {
+                console.error('Error inserting blog post:', err);
+                return res.status(500).json({ error: 'Error inserting blog post' });
+            }
+            res.status(200).json({ message: 'Blog created successfully' });
+        });
+    }
+});
+app.get('/blogs', (req, res) => {
+    db.getAllBlogPosts((err, rows) => {
+        if (err) {
+            res.status(500).send('Error retrieving blog posts');
+        } else {
+            res.status(200).json(rows);
+        }
+    });
+    r
+});
+
+app.get("/viewblog/:id", (req, res) => {
+    const blogId = req.params.id;
+    connection.query("SELECT * FROM posts WHERE id = ?", [blogId], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: "Error fetching blog post" });
+        } else {
+            if (rows.length > 0) {
+                res.render("viewblog", { post: rows[0] });
+            } else {
+                res.status(404).json({ error: "Blog post not found" });
+            }
+        }
+    });
+});
 
 app.get("/getContact", (req, res) => {
     db.getAllContactFormEntries((err, entries) => {
@@ -166,42 +252,6 @@ app.post("/postContact", (req, res) => {
             res.status(500).send("Error adding contact form entry");
         } else {
             res.status(201).send("Contact form entry added successfully");
-        }
-    });
-});
-
-// Get all blog posts
-app.get("/getBlog", (req, res) => {
-    db.getAllBlogPosts((err, posts) => {
-        if (err) {
-            res.status(500).send("Error fetching blog posts");
-        } else {
-            res.json(posts);
-        }
-    });
-});
-
-app.get("/viewblog/:id", (req, res) => {
-    const blogId = req.params.id;
-    connection.query("SELECT * FROM blog WHERE id = ?", [blogId], (err, rows) => {
-        if (err) {
-            res.status(500).json({ error: "Error fetching blog post" });
-        } else {
-            if (rows.length > 0) {
-                res.render("viewblog", { post: rows[0] });
-            } else {
-                res.status(404).json({ error: "Blog post not found" });
-            }
-        }
-    });
-});
-app.post("/addblogpost", (req, res) => {
-    const postData = req.body;
-    db.addBlogPost(postData, (err, result) => {
-        if (err) {
-            res.status(500).send("Error adding blog post");
-        } else {
-            res.status(201).send("Blog post added successfully");
         }
     });
 });
@@ -228,9 +278,9 @@ app.put("/updateBlog/:id", (req, res) => {
 //add user
 // Add a new user registration endpoint
 app.post("/register", (req, res) => {
-    const { firstName, lastName, email, password, phone } = req.body;
+    const { firstName, lastName, email, password, phone, role } = req.body;
 
-    if (!firstName || !lastName || !email || !password || !phone) {
+    if (!firstName || !lastName || !email || !password || !phone || !role) {
         return res.status(400).send("All fields are required.");
     }
 
@@ -240,42 +290,86 @@ app.post("/register", (req, res) => {
         email,
         password,
         phone,
+        role
     };
 
     db.addUser(entryData, (err, result) => {
         if (err) {
-            res.status(500).send("Error registering user.");
-        } else {
-            // Generate JWT token
-            const token = jwt.sign({ email: email }, secretKey, { expiresIn: "1h" });
-            res
-                .status(201)
-                .json({ message: "User registered successfully.", token: token });
+            console.error("Error registering user:", err);
+            return res.status(500).send("Error registering user.");
         }
+
+        // Generate JWT token
+        const token = jwt.sign({ email: email }, secretKey, { expiresIn: "1h" });
+        res.status(201).json({ message: "User registered successfully.", token });
+
+
     });
 });
+
 
 //login
 app.post("/login", async(req, res) => {
     const { email, password } = req.body;
     db.loginUser(email, password, (err, result) => {
         if (err) {
-            res.status(500).send("Error logging in user.");
+            res.status(500).json({ message: "Error logging in user." });
         } else {
             if (result.length > 0) {
                 const token = jwt.sign({ email: email }, secretKey, {
                     expiresIn: "1h",
                 });
-                res
-                    .status(200)
-                    .json({ message: "User logged in successfully.", token: token });
-                // res.redirect('/');
+                res.status(200).json({ message: "User logged in successfully.", token: token });
             } else {
-                res.status(401).json({ message: "Error logging in user." });
+                res.status(401).json({ message: "Invalid email or password." });
             }
         }
     });
 });
+
+
+// nodemaile
+app.post('/send-email', async(req, res) => {
+    const { email } = req.body;
+
+    // Set up Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'amolspatil018@gmail.com',
+            pass: 'otja ldol mici urdn'
+        }
+    });
+
+    // Email options
+    const mailOptions = {
+        from: email,
+        to: "amolspatil018@gmail.com",
+        subject: `New Signup from ${email}`,
+        text: `You have a new signup with the email: ${email}`
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+
+        // Insert email data into the database
+        db.addEmailRecord({ email }, (err, insertId) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error saving email data to database');
+                return;
+            }
+            console.log('Email data saved to database with ID:', insertId);
+            // res.send("/");
+            res.redirect("/contact");
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error sending email');
+    }
+});
+
+
 app.listen(8080, () => {
     console.log("Server is running on port 8080");
 });

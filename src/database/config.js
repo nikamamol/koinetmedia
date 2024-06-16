@@ -40,7 +40,7 @@ const addContactFormEntry = (entryData, callback) => {
 
 // Function to fetch all blog posts
 const getAllBlogPosts = (callback) => {
-    connection.query("SELECT * FROM blog", (err, rows) => {
+    connection.query("SELECT * FROM post", (err, rows) => {
         if (err) {
             callback(err, null);
         } else {
@@ -49,7 +49,7 @@ const getAllBlogPosts = (callback) => {
     });
 };
 const getBlogPostById = (id, callback) => {
-    connection.query('SELECT * FROM blog WHERE id = ?', [id], (err, rows) => {
+    connection.query('SELECT * FROM posts WHERE id = ?', [id], (err, rows) => {
         if (err) {
             callback(err, null);
         } else {
@@ -65,20 +65,17 @@ const getBlogPostById = (id, callback) => {
 
 // Function to add a new blog post
 // Function to add blog post to MySQL
-const addBlogPost = (postData, callback) => {
-    const sql = 'INSERT INTO posts (content) VALUES (?)';
-    const values = [postData.content]; // Assuming postData has a 'content' property
-
-    connection.query(sql, values, (err, result) => {
+const addBlogPost = (title, category, content, imageUrl, callback) => {
+    const sql = 'INSERT INTO blogs2 (title, category, content, imageUrl) VALUES (?, ?, ?, ?)';
+    connection.query(sql, [title, category, content, imageUrl], (err, result) => {
         if (err) {
-            console.error('Error inserting into MySQL: ' + err.stack);
-            callback(err, null); // Pass error to callback
-            return;
+            callback(err, null);
+        } else {
+            callback(null, result);
         }
-        console.log('Inserted into MySQL with ID: ' + result.insertId);
-        callback(null, result.insertId); // Pass result to callback
     });
 };
+
 //update blog 
 const updateBlogPost = (data, callback) => {
     connection.query(
@@ -105,6 +102,7 @@ const addUser = (userData, callback) => {
 
             } else {
                 callback(null, result);
+
             }
         }
     );
@@ -124,6 +122,20 @@ const loginUser = (email, password, callback) => {
     );
 };
 
+const addEmailRecord = (emailData, callback) => {
+    const sql = 'INSERT INTO signupemail (email) VALUES (?)';
+    const values = [emailData.email];
+
+    connection.query(sql, values, (err, result) => {
+        if (err) {
+            // console.error('Error inserting into MySQL: ' + err.stack);
+            callback(err, null);
+            return;
+        }
+        // console.log('Inserted into MySQL with ID: ' + result.insertId);
+        callback(null, result.insertId);
+    });
+};
 // Exporting functions
 module.exports = {
     connection: connection,
@@ -135,4 +147,5 @@ module.exports = {
     addUser: addUser,
     loginUser: loginUser,
     getBlogPostById: getBlogPostById,
+    addEmailRecord: addEmailRecord
 };

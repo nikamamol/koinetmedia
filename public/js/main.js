@@ -128,7 +128,6 @@ document
 
 //********************************************************************************** */
 // register form
-
 async function submitForm() {
     const form = document.getElementById("registrationForm");
     const formData = new FormData(form);
@@ -153,17 +152,18 @@ async function submitForm() {
         const result = await response.json();
 
         if (response.ok) {
-            alert(result.message);
-
+            // Registration successful, redirect to login page
+            window.location.href = "/login";
         } else {
+            // Registration failed, show error message
             alert(result.message || "Error registering user.");
         }
     } catch (error) {
         console.error("Error:", error);
         alert("Error registering user.");
     }
-
 }
+
 
 // //login user
 // document.getElementById('loginForm').addEventListener('submit', async function(event) {
