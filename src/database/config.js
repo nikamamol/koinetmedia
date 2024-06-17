@@ -40,7 +40,7 @@ const addContactFormEntry = (entryData, callback) => {
 
 // Function to fetch all blog posts
 const getAllBlogPosts = (callback) => {
-    connection.query("SELECT * FROM post", (err, rows) => {
+    connection.query("SELECT * FROM blogs2", (err, rows) => {
         if (err) {
             callback(err, null);
         } else {
@@ -48,8 +48,23 @@ const getAllBlogPosts = (callback) => {
         }
     });
 };
+
+const addBlogPost = (title, category, content, imageUrl, callback) => {
+    const sql =
+        "INSERT INTO blogs2 (title, category, content, imageUrl) VALUES (?, ?, ?, ?)";
+    connection.query(sql, [title, category, content, imageUrl], (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
+    });
+};
+
+
+
 const getBlogPostById = (id, callback) => {
-    connection.query('SELECT * FROM posts WHERE id = ?', [id], (err, rows) => {
+    connection.query('SELECT * FROM blogs2 WHERE id = ?', [id], (err, rows) => {
         if (err) {
             callback(err, null);
         } else {
@@ -63,20 +78,9 @@ const getBlogPostById = (id, callback) => {
 };
 
 
-// Function to add a new blog post
-// Function to add blog post to MySQL
-const addBlogPost = (title, category, content, imageUrl, callback) => {
-    const sql = 'INSERT INTO blogs2 (title, category, content, imageUrl) VALUES (?, ?, ?, ?)';
-    connection.query(sql, [title, category, content, imageUrl], (err, result) => {
-        if (err) {
-            callback(err, null);
-        } else {
-            callback(null, result);
-        }
-    });
-};
 
-//update blog 
+
+//update blog
 const updateBlogPost = (data, callback) => {
     connection.query(
         "UPDATE blog SET title = ?, content = ?, author = ?, imagePath = ? WHERE id = ?",
@@ -93,19 +97,13 @@ const updateBlogPost = (data, callback) => {
 //register user
 
 const addUser = (userData, callback) => {
-    connection.query(
-        "INSERT INTO register SET ?",
-        userData,
-        (err, result) => {
-            if (err) {
-                callback(err, null);
-
-            } else {
-                callback(null, result);
-
-            }
+    connection.query("INSERT INTO register SET ?", userData, (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
         }
-    );
+    });
 };
 
 //login user
@@ -123,7 +121,7 @@ const loginUser = (email, password, callback) => {
 };
 
 const addEmailRecord = (emailData, callback) => {
-    const sql = 'INSERT INTO signupemail (email) VALUES (?)';
+    const sql = "INSERT INTO signupemail (email) VALUES (?)";
     const values = [emailData.email];
 
     connection.query(sql, values, (err, result) => {
@@ -147,5 +145,5 @@ module.exports = {
     addUser: addUser,
     loginUser: loginUser,
     getBlogPostById: getBlogPostById,
-    addEmailRecord: addEmailRecord
+    addEmailRecord: addEmailRecord,
 };

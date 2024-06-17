@@ -155,36 +155,34 @@ app.use(fileUpload());
 // app.use("/public", express.static(path.join(__dirname, "../public")));
 
 // API endpoint for adding a blog post
-cloudinary.config({
-    cloud_name: 'didbp2ojb',
-    api_key: '697371988926662',
-    api_secret: 'SX--cbDmvT13Pi9HPQyciyTgs2A'
-});
+// cloudinary.config({
+//     cloud_name: 'didbp2ojb',
+//     api_key: '697371988926662',
+//     api_secret: 'SX--cbDmvT13Pi9HPQyciyTgs2A'
+// });
+
 
 app.post('/api/addblog', (req, res) => {
     const { title, category, content } = req.body;
     let imageUrl = null;
 
     // Handle file upload if there is a file
-    if (req.files && req.files.image) {
-        const image = req.files.image;
+    if (req.file) {
+        const image = req.file;
 
-        // Upload image to Cloudinary
-        cloudinary.uploader.upload(image.tempFilePath, (err, result) => {
+        // Replace the Cloudinary upload logic with your own logic if necessary
+        // For simplicity, assuming image is already uploaded to '/public/avatar'
+
+        // Assuming imageUrl is constructed based on the uploaded filename
+        imageUrl = '/avatar/' + image.filename; // Adjust this based on your actual path
+
+        // Insert into database after file upload
+        db.addBlogPost(title, category, content, imageUrl, (err, result) => {
             if (err) {
-                console.error('Error uploading file to Cloudinary:', err);
-                return res.status(500).send('Error uploading file');
+                console.error('Error inserting blog post:', err);
+                return res.status(500).json({ error: 'Error inserting blog post' });
             }
-            imageUrl = result.secure_url; // URL of the uploaded image on Cloudinary
-
-            // Insert into database after file upload
-            db.addBlogPost(title, category, content, imageUrl, (err, result) => {
-                if (err) {
-                    console.error('Error inserting blog post:', err);
-                    return res.status(500).json({ error: 'Error inserting blog post' });
-                }
-                res.status(200).json({ message: 'Blog created successfully', imageUrl });
-            });
+            res.status(200).json({ message: 'Blog created successfully', imageUrl });
         });
     } else if (req.body.imageUrl) {
         // If imageUrl is provided in the request body directly
@@ -195,7 +193,7 @@ app.post('/api/addblog', (req, res) => {
                 console.error('Error inserting blog post:', err);
                 return res.status(500).json({ error: 'Error inserting blog post' });
             }
-            res.status(200).json({ message: 'Blog created successfully', imageUrl });
+            res.status(200).json({ message: 'Blog created successfully' });
         });
     } else {
         // Handle case where no file and no imageUrl provided
@@ -208,7 +206,8 @@ app.post('/api/addblog', (req, res) => {
         });
     }
 });
-app.get('/blogs', (req, res) => {
+//get blog post on blog page
+app.get('/api/blogs', (req, res) => {
     db.getAllBlogPosts((err, rows) => {
         if (err) {
             res.status(500).send('Error retrieving blog posts');
@@ -216,20 +215,17 @@ app.get('/blogs', (req, res) => {
             res.status(200).json(rows);
         }
     });
-    r
+
 });
 
-app.get("/viewblog/:id", (req, res) => {
+app.get('/api/blog/:id', (req, res) => {
     const blogId = req.params.id;
-    connection.query("SELECT * FROM posts WHERE id = ?", [blogId], (err, rows) => {
+    db.getBlogPostById(blogId, (err, blogPost) => {
         if (err) {
-            res.status(500).json({ error: "Error fetching blog post" });
+            console.error('Error retrieving blog post:', err);
+            res.status(500).json({ error: 'Error retrieving blog post' });
         } else {
-            if (rows.length > 0) {
-                res.render("viewblog", { post: rows[0] });
-            } else {
-                res.status(404).json({ error: "Blog post not found" });
-            }
+            res.status(200).json(blogPost);
         }
     });
 });
