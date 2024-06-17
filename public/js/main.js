@@ -103,7 +103,7 @@ document
             message,
         };
 
-        fetch("http://localhost:8080/postContact", {
+        fetch("/postContact", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
