@@ -59,5 +59,54 @@
             ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
         });
     </script>
+    <script>
+        // Function to check if user is authenticated (has token in localStorage)
+const isAuthenticated = () => {
+    return localStorage.getItem('token') !== null;
+};
+
+// Function to fetch the /addblog page content with POST method
+const fetchAddBlogPage = () => {
+    const formData = new FormData(); // Create a FormData object
+
+    // Prepare any data you need to send with the POST request
+    formData.append('token', token); // Example: Replace with actual data
+
+    fetch('/api/addblog', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: formData // Pass formData as body for POST request
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Unauthorized');
+        }
+        return response.text();
+    })
+    .then(html => {
+        // Replace the content of a specific element with fetched HTML
+        const container = document.getElementById('addBlogContainer');
+        container.innerHTML = html;
+    })
+    .catch(error => {
+        console.error('Unauthorized:', error.message);
+        // Redirect to login page or handle unauthorized access
+        window.location.href = '/login'; // Adjust as per your login route
+    });
+};
+
+// On page load, check authentication status and fetch /addblog page if authenticated
+document.addEventListener('DOMContentLoaded', () => {
+    if (isAuthenticated()) {
+        fetchAddBlogPage();
+    } else {
+        // Redirect to login page if not authenticated
+        window.location.href = '/login'; // Adjust as per your login route
+    }
+});
+
+    </script>
 </body>
 </html>

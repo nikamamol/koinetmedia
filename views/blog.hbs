@@ -68,7 +68,7 @@
     {{>footer}}
 
     <!-- Back to Top Button -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-danger btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
 
     <!-- Bootstrap Modal -->
     <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
@@ -134,7 +134,7 @@
                                     <div class="px-3">
                                         <a href="/viewblog/${post.id}" class="mb-3 cursor-pointer fs-4 fw-bold text-decoration-none">${post.title}</a>
                                         <p class="text-start py-3 fw-bold">Published on : ${formattedDate}</p>
-                                        <p class="text-start py-3 fw-bold">Published on : ${post.caregory}</p>
+                                        {{!-- <p class="text-start fw-bold">Published on : ${post.category}</p> --}}
                                     </div>
                                 </div>
                                 <div class="service-btn rounded-0 rounded-bottom">

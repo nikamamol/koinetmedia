@@ -9,16 +9,13 @@ const db = require("../src/database/config.js");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const fileUpload = require("express-fileupload");
-const authenticateJWT = require("../src/authmiddleware.js");
 const fs = require("fs");
 const nodemailer = require('nodemailer');
 const multer = require('multer');
 const cookieParser = require('cookie-parser');
+const verifyToken = require("./authmiddleware.js");
 const cloudinary = require('cloudinary').v2;
-const secretKey =
-    "pLud5OFaXkEa-8FrVYVnB3aZimVULT10fJapm-5vlKPnihgVUkJ3TFK_QqREbCkw";
-
-
+const secretKey = "pLud5OFaXkEa-8FrVYVnB3aZimVULT10fJapm-5vlKPnihgVUkJ3TFK_QqREbCkw";
 
 app.use(
     cors({
@@ -48,7 +45,7 @@ app.get("/services", (req, res) => {
 app.get("/blog", (req, res) => {
     res.render("blog", { title: "Blog" });
 });
-app.get("/addblog", (req, res) => {
+app.get("/addblog", verifyToken, (req, res) => {
     res.render("addblog", { title: "Add Blog" });
 });
 app.get("/viewblog/:id", (req, res) => {
@@ -163,12 +160,7 @@ app.post('/api/addblog', (req, res) => {
     // Handle file upload if there is a file
     if (req.file) {
         const image = req.file;
-
-        // Replace the Cloudinary upload logic with your own logic if necessary
-        // For simplicity, assuming image is already uploaded to '/public/avatar'
-
-        // Assuming imageUrl is constructed based on the uploaded filename
-        imageUrl = '/avatar/' + image.filename; // Adjust this based on your actual path
+        imageUrl = '/avatar/' + image.filename;
 
         // Insert into database after file upload
         db.addBlogPost(title, category, content, imageUrl, (err, result) => {
@@ -306,9 +298,7 @@ app.post("/login", async(req, res) => {
             res.status(500).json({ message: "Error logging in user." });
         } else {
             if (result.length > 0) {
-                const token = jwt.sign({ email: email }, secretKey, {
-                    expiresIn: "1h",
-                });
+                const token = jwt.sign({ email: email }, secretKey, { expiresIn: "1h" });
                 res.status(200).json({ message: "User logged in successfully.", token: token });
             } else {
                 res.status(401).json({ message: "Invalid email or password." });
