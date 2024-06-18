@@ -163,31 +163,3 @@ async function submitForm() {
         alert("Error registering user.");
     }
 }
-
-
-// //login user
-// document.getElementById('loginForm').addEventListener('submit', async function(event) {
-//     event.preventDefault(); // Prevent the form from submitting the default way
-//     const email = document.getElementById('email').value;
-//     const password = document.getElementById('password').value;
-
-//     const response = await fetch('/login', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({ email, password })
-//     });
-
-//     const result = await response.json();
-//     const messageDiv = document.getElementById('message');
-
-//     if (response.status === 200) {
-//         messageDiv.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
-//         setTimeout(() => {
-//             window.location.href = '/'; // Redirect to the home page
-//         }, 1000);
-//     } else {
-//         messageDiv.innerHTML = `<div class="alert alert-danger">${result.message}</div>`;
-//     }
-// });

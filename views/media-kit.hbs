@@ -42,7 +42,7 @@
               <div class="col">
                 <img src="../public/images/casestudies.jpg" alt="casestudies" class="img-fluid"/>
                    <div class="text-center my-3">
-                      <button id="downloadButton" class="btn btn-danger btn-lg p-4 hover_btn">Download Now</button>
+                      <button id="downloadpdfbutton" class="btn btn-danger btn-lg p-4 hover_btn">Download Now</button>
                    </div>
               </div>
             </div>
@@ -50,6 +50,16 @@
         </div>
       </div>
     </div>
+     <script>
+    document.getElementById('downloadpdfbutton').addEventListener('click', function() {
+        // Replace 'example.pdf' with the path to your PDF file
+        var pdfFilePath = 'public/images/KoiNet Media (Media-Kit).pdf';
+        var link = document.createElement('a');
+        link.href = pdfFilePath;
+        link.download = pdfFilePath.split('/').pop();
+        link.click();
+    });
+</script>
 
 
     {{>footer}}

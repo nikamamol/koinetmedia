@@ -133,42 +133,7 @@
                 });
         });
     </script> 
-     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('/blogs')
-                .then(response => response.json())
-                .then(posts => {
-                    const blogPostsElement = document.querySelector('#blogPosts .row');
-                    posts.forEach(post => {
-                        const postElement = document.createElement('div');
-                        postElement.classList.add('col-lg-4', 'col-md-6', 'wow', 'fadeInUp');
-                        postElement.setAttribute('data-wow-delay', '0.1s');
-                        postElement.innerHTML = `
-                            <div class="service-item position-relative h-100">
-                                <div class="service-text rounded-3 shadow blogHover">
-                                    <div class="mb-4">
-                                        <img class="img-fluid" src="${post.imageUrl}" alt="Icon" style="border-radius: 10px 10px 0 0;">
-                                    </div>
-                                    <div class="p-4">
-                                        <a href="/viewblog/${post.id}" class="mb-3 cursor-pointer fs-4 fw-bold text-decoration-none">${post.title}</a>
-                                        {{!-- <p class="mb-0">${post.description}</p> --}}
-                                    </div>
-                                </div>
-                                <div class="service-btn rounded-0 rounded-bottom">
-                                    <a class="text-primary fw-medium" href="/viewblog/${post.id}">Read More<i class="bi bi-chevron-double-right ms-2"></i></a>
-                                </div>
-                            </div>
-                        `;
-                        blogPostsElement.appendChild(postElement);
-                    });
-                })
-                .catch(error => console.error('Error fetching blog posts:', error))
-                .finally(() => {
-                    // Remove spinner when done loading
-                    document.getElementById('spinner').classList.remove('show');
-                });
-        });
-    </script>
+
     
     <script>
         document.addEventListener('DOMContentLoaded',function(){

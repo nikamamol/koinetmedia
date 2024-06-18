@@ -72,5 +72,16 @@
 
     <!-- Template Javascript -->
     <script src="../public/js/main.js"></script>
+    <script>
+    document.getElementById('downloadButtoncasestudies').addEventListener('click', function() {
+        // Replace 'example.pdf' with the path to your PDF file
+        var pdfFilePath = '../public/images/CaseStudy.pdf';
+        var link = document.createElement('a');
+        link.href = pdfFilePath;
+        link.download = pdfFilePath.split('/').pop();
+        link.click();
+    });
+</script>
+
   </body>
 </html>

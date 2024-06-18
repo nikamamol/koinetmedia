@@ -892,10 +892,46 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-image: url('../images/s6.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.demandBg {
+    background-image: url('../images/dg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 800px;
+    height: 400;
+}
+
+.appointmentbg {
+    background-image: url('../images/appointment.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.demandBg2 {
+    background-image: url('../images/dg2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 500px;
+    height: 500px;
 }
 
 .contactdiscoveryBg {
     background-image: url('../images/s10.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.emailmarketing_bg {
+    background-image: url('../images/emailm.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -931,6 +967,21 @@ body {
 
 .seobg {
     background-image: url('../images/seobg.avif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.popupBg {
+    background-color: #badce986;
+}
+
+.bgHomeblog {
+    background-color: #D8EFD3;
+}
+
+.contactBg {
+    background-image: url('../images/contactbg.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
