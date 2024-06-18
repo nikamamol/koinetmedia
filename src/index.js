@@ -9,12 +9,16 @@ const db = require("../src/database/config.js");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const fileUpload = require("express-fileupload");
+const authenticateJWT = require("../src/authmiddleware.js");
 const fs = require("fs");
 const nodemailer = require('nodemailer');
 const multer = require('multer');
+const cookieParser = require('cookie-parser');
 const cloudinary = require('cloudinary').v2;
 const secretKey =
     "pLud5OFaXkEa-8FrVYVnB3aZimVULT10fJapm-5vlKPnihgVUkJ3TFK_QqREbCkw";
+
+
 
 app.use(
     cors({
@@ -32,7 +36,7 @@ app.use(
         extended: false,
     })
 );
-
+app.use(cookieParser());
 app.get("/", (req, res) => {
     res.render("home", { title: "Home" });
 });
@@ -151,16 +155,6 @@ hbs.registerPartials(partials_path);
 app.use(express.urlencoded({ extended: false }));
 app.use(fileUpload());
 
-// Serve static files
-// app.use("/public", express.static(path.join(__dirname, "../public")));
-
-// API endpoint for adding a blog post
-// cloudinary.config({
-//     cloud_name: 'didbp2ojb',
-//     api_key: '697371988926662',
-//     api_secret: 'SX--cbDmvT13Pi9HPQyciyTgs2A'
-// });
-
 
 app.post('/api/addblog', (req, res) => {
     const { title, category, content } = req.body;
@@ -271,6 +265,7 @@ app.put("/updateBlog/:id", (req, res) => {
         }
     });
 });
+
 //add user
 // Add a new user registration endpoint
 app.post("/register", (req, res) => {
@@ -303,7 +298,6 @@ app.post("/register", (req, res) => {
     });
 });
 
-
 //login
 app.post("/login", async(req, res) => {
     const { email, password } = req.body;
@@ -322,7 +316,6 @@ app.post("/login", async(req, res) => {
         }
     });
 });
-
 
 // nodemaile
 app.post('/send-email', async(req, res) => {
@@ -364,7 +357,6 @@ app.post('/send-email', async(req, res) => {
         res.status(500).send('Error sending email');
     }
 });
-
 
 app.listen(8080, () => {
     console.log("Server is running on port 8080");

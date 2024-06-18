@@ -5,6 +5,7 @@ body {
     font-family: "Reddit Sans Condensed", sans-serif;
     font-optical-sizing: auto;
     color: #002743;
+    overflow-x: hidden;
     /* font-weight: 500;
     font-style: 300; */
 }
@@ -442,7 +443,7 @@ body {
     width: 100%;
     top: 0;
     left: 0;
-    text-align: center;
+    text-align: start;
     background: #FFFFFF;
     box-shadow: 0 0 45px rgba(0, 0, 0, .06);
     transition: .5s;
@@ -640,7 +641,7 @@ body {
 .testimonial-item img {
     width: 100px !important;
     height: 100px !important;
-    border-radius: 100px;
+    /* border-radius: 100px; */
 }
 
 .testimonial-carousel .owl-nav {
@@ -985,4 +986,19 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.recaptcha-container {
+    position: fixed;
+    bottom: 0;
+    margin-left: -220px;
+    z-index: 1000;
+}
+
+.recaptcha-container:hover {
+    position: fixed;
+    bottom: 0;
+    margin-left: 0px;
+    z-index: 1000;
+    transition: margin-left 1s;
 }

@@ -43,7 +43,7 @@
                     </div>
                     <form id="loginForm">
                         <div class="mb-2">
-                            <label for="email" class="form-label">Username</label>
+                            <label for="email" class="form-label">Email</label>
                             <input type="email" id="email" class="form-control" aria-describedby="emailHelp" required />
                         </div>
                         <div class="mb-2">
@@ -86,7 +86,7 @@ form.addEventListener('submit', async (event) => {
     if (response.status === 200) {
         messageDiv.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
         setTimeout(() => {
-            window.location.href = '/addblog'; // Redirect to the home page after showing success message
+            window.location.href = '/addblog'; 
         }, 1000);
     } else {
         messageDiv.innerHTML = `<div class="alert alert-danger">${result.message}</div>`;

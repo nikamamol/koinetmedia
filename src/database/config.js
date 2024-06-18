@@ -64,19 +64,18 @@ const addBlogPost = (title, category, content, imageUrl, callback) => {
 
 
 const getBlogPostById = (id, callback) => {
-    connection.query('SELECT * FROM blogs2 WHERE id = ?', [id], (err, rows) => {
+    connection.query("SELECT * FROM blogs2 WHERE id = ?", [id], (err, rows) => {
         if (err) {
             callback(err, null);
         } else {
             if (rows.length > 0) {
                 callback(null, rows[0]); // Assuming id is unique, return the first (and only) result
             } else {
-                callback(new Error('Blog post not found'), null);
+                callback(new Error("Blog post not found"), null);
             }
         }
     });
 };
-
 
 
 
