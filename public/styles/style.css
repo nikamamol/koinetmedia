@@ -215,11 +215,37 @@ body {
 }
 
 
-/* 
-.navbar .navbar-nav .nav-link:hover,
+/* .navbar .navbar-nav .nav-link:hover,
 .navbar .navbar-nav .nav-link.active {
     color: var(--primary);
 } */
+
+.navbar .navbar-nav .nav-link {
+    position: relative;
+    color: black;
+    padding-bottom: 10px;
+    /* Add some padding for the underline space */
+}
+
+.navbar .navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    /* Thickness of the underline */
+    background-color: var(--primary);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.navbar .navbar-nav .nav-link:hover::after,
+.navbar .navbar-nav .nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
 
 .navbar .dropdown-toggle::after {
     border: none;
@@ -1006,4 +1032,34 @@ body {
 .serchBg {
     background: rgb(2, 0, 36);
     background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 213, 255, 0.541) 100%);
+}
+
+.navarBgGradient {
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 26, 255, 1) 100%);
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 26, 255, 1) 100%);
+    }
+    25% {
+        background: linear-gradient(90deg, rgba(0, 36, 36, 1) 0%, rgba(9, 121, 121, 1) 35%, rgba(0, 255, 255, 1) 100%);
+    }
+    50% {
+        background: linear-gradient(90deg, rgba(36, 0, 36, 1) 0%, rgba(121, 9, 121, 1) 35%, rgb(189, 34, 189) 100%);
+    }
+    75% {
+        background: linear-gradient(90deg, rgba(36, 36, 0, 1) 0%, rgba(121, 121, 9, 1) 35%, rgb(92, 92, 72) 100%);
+    }
+    100% {
+        background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 26, 255, 1) 100%);
+    }
+}
+
+.categorydropdown {
+    max-height: 200px;
+    /* Adjust the height as needed */
+    overflow-x: auto;
 }

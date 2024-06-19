@@ -2,20 +2,17 @@ const express = require("express");
 const app = express();
 const hbs = require("hbs");
 const path = require("path");
-const port = 8080;
+require('dotenv').config();
 const static_path = path.join(__dirname, "../views");
 const partials_path = path.join(__dirname, "../views/partials");
 const db = require("../src/database/config.js");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const fileUpload = require("express-fileupload");
-const fs = require("fs");
 const nodemailer = require('nodemailer');
-const multer = require('multer');
 const cookieParser = require('cookie-parser');
-const verifyToken = require("./authmiddleware.js");
-const cloudinary = require('cloudinary').v2;
-const secretKey = "pLud5OFaXkEa-8FrVYVnB3aZimVULT10fJapm-5vlKPnihgVUkJ3TFK_QqREbCkw";
+const secretKey = process.env.SECRETE_KEY;
+const port = process.env.PORT || 8080;
 
 app.use(
     cors({
@@ -194,14 +191,14 @@ app.post('/api/addblog', (req, res) => {
 });
 //get blog post on blog page
 app.get('/api/blogs', (req, res) => {
-    const page = parseInt(req.query.page) || 1; // Current page number, default to 1
-    const limit = parseInt(req.query.limit) || 10; // Number of items per page, default to 10
-    const search = req.query.search || ''; // Search query
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search || '';
+    const category = req.query.category || ''; // New category filter
 
-    // Calculate offset
     const offset = (page - 1) * limit;
 
-    db.getAllBlogPosts(limit, offset, search, (err, rows) => {
+    db.getAllBlogPosts(limit, offset, search, category, (err, rows) => {
         if (err) {
             res.status(500).send('Error retrieving blog posts');
         } else {
@@ -210,20 +207,6 @@ app.get('/api/blogs', (req, res) => {
     });
 });
 
-//use search and pagination in  blog page 
-app.get('/api/blogs', (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = 6; // Number of blogs per page
-    const search = req.query.search || '';
-
-    db.getPaginatedBlogPosts(page, limit, search, (err, rows) => {
-        if (err) {
-            res.status(500).send('Error retrieving blog posts');
-        } else {
-            res.status(200).json(rows);
-        }
-    });
-});
 
 app.get('/api/blog/:id', (req, res) => {
     const blogId = req.params.id;
@@ -336,15 +319,16 @@ app.post('/send-email', async(req, res) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'amolspatil018@gmail.com',
-            pass: 'otja ldol mici urdn'
+            user: process.env.MAIL_USER,
+            pass: process.env.MAIL_PASSWORD
         }
     });
+
 
     // Email options
     const mailOptions = {
         from: email,
-        to: "amolspatil018@gmail.com",
+        to: process.env.MAIL_TO,
         subject: `New Signup from ${email}`,
         text: `You have a new signup with the email: ${email}`
     };
@@ -369,6 +353,6 @@ app.post('/send-email', async(req, res) => {
     }
 });
 
-app.listen(8080, () => {
-    console.log("Server is running on port 8080");
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });

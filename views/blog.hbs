@@ -36,20 +36,64 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <form id="searchForm">
+            <div class="col-lg-12 ">
+                <form id="searchForm" class="d-flex ">
                     <div class="input-group w-50 mx-auto py-2 rounded-pill serchBg p-2">
                         <input type="text" class="form-control rounded-pill" placeholder="Search..." id="searchInput" name="search">
                         <div class="input-group-append ">
-                            <button class="btn btn-outline-dark rounded-pill" type="submit">
+                            <button class="btn btn-outline-dark rounded-pill ms-1" type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
                     </div>
+                    <div>
+                          <select class="form-select" id="categoryDropdown">
+                            <option value="">Select Category</option>
+                            <option value="AI/ML">AI/ML</option>
+                            <option value="Advertising">Advertising</option>
+                            <option value="B2B">B2B</option>
+                            <option value="Business">Business</option>
+                            <option value="Big Data">Big Data</option>
+                            <option value="Content Marketing">Content Marketing</option>
+                            <option value="Customer Experience Management">Customer Experience Management</option>
+                            <option value="Digital Asset Management">Digital Asset Management</option>
+                            <option value="Lead Generation">Lead Generation</option>
+                            <option value="Demand Generation">Demand Generation</option>
+                            <option value="Identity Management">Identity Management</option>
+                            <option value="Analytics">Analytics</option>
+                            <option value="Automation">Automation</option>
+                            <option value="Business Intelligence">Business Intelligence</option>
+                            <option value="Content Syndication">Content Syndication</option>
+                            <option value="Customer Identity Management">Customer Identity Management</option>
+                            <option value="Ecommerce and Mobile Ecommerce">Ecommerce and Mobile Ecommerce</option>
+                            <option value="Intelligent Assistants">Intelligent Assistants</option>
+                            <option value="Apps for Business">Apps for Business</option>
+                            <option value="B2B Data">B2B Data</option>
+                            <option value="Collaboration">Collaboration</option>
+                            <option value="Customer Acquisition">Customer Acquisition</option>
+                            <option value="Customer Relationship Management">Customer Relationship Management</option>
+                            <option value="Email Marketing">Email Marketing</option>
+                            <option value="Interactive Content">Interactive Content</option>
+                            <option value="Audience Data">Audience Data</option>
+                            <option value="Behavioral Marketing">Behavioral Marketing</option>
+                            <option value="Communications">Communications</option>
+                            <option value="Customer Data Platforms">Customer Data Platforms</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="AR/VR">AR/VR</option>
+                            <option value="Brand Safety">Brand Safety</option>
+                            <option value="Content Management">Content Management</option>
+                            <option value="Customer Engagement">Customer Engagement</option>
+                            <option value="Digital Transformation">Digital Transformation</option>
+                            <option value="Natural Language Processing">Natural Language Processing</option>
+                        </select>
+                    </div>
+
                 </form>
             </div>
         </div>
     </div>
+
 
     <!-- Blog Posts Container -->
     <div id="blogPosts" class="container-xxl py-5">
@@ -95,70 +139,96 @@
 
     <!-- Fetch and Display Blog Posts -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const monthNames = [
-                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-            ];
+  document.addEventListener('DOMContentLoaded', () => {
+    const monthNames = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
 
-            // Function to format date into "DD Mon YYYY" format
-            const formatDate = (dateString) => {
-                const date = new Date(dateString);
-                const day = date.getDate();
-                const month = monthNames[date.getMonth()];
-                const year = date.getFullYear();
-                return `${day} ${month} ${year}`;
-            };
+    // Function to format date into "DD Mon YYYY" format
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = date.getDate();
+        const month = monthNames[date.getMonth()];
+        const year = date.getFullYear();
+        return `${day} ${month} ${year}`;
+    };
 
-            const blogPostsElement = document.querySelector('#blogPosts .row');
+    const blogPostsElement = document.querySelector('#blogPosts .row');
+    const noDataMessage = '<div class="col text-center"><p>No blog posts available.</p></div>';
 
-            const fetchBlogPosts = (page = 1, search = '') => {
-                fetch(`/api/blogs?page=${page}&search=${search}`)
-                    .then(response => response.json())
-                    .then(posts => {
-                        blogPostsElement.innerHTML = ''; // Clear previous posts
+    const fetchBlogPosts = (page = 1, search = '', category = '') => {
+        let url = `/api/blogs?page=${page}`;
+        if (search) {
+            url += `&search=${search}`;
+        }
+        if (category) {
+            url += `&category=${category}`;
+        }
+        fetch(url)
+            .then(response => response.json())
+            .then(posts => {
+                blogPostsElement.innerHTML = ''; // Clear previous posts
 
-                        posts.forEach(post => {
-                            const formattedDate = formatDate(post.created_at);
-                            const postElement = document.createElement('div');
-                            postElement.classList.add('col-lg-4', 'col-md-6', 'wow', 'fadeInUp');
-                            postElement.setAttribute('data-wow-delay', '0.1s');
-                            postElement.innerHTML = `
-                                <div class="service-item position-relative h-100">
-                                    <div class="service-text rounded-3 shadow blogHover">
-                                        <div class="mb-4">
-                                            <img class="img-fluid" src="${post.imageUrl}" alt="Icon" style="border-radius: 10px 10px 0 0;">
-                                        </div>
-                                        <div class="p-4">
-                                            <a href="/viewblog/${post.id}" class="mb-3 cursor-pointer fs-4 fw-bold text-decoration-none">${post.title}</a>
-                                            <p class="text-start my-2">Published on : ${formattedDate}</p>
-                                        </div>
+                if (posts.length === 0) {
+                    blogPostsElement.innerHTML = noDataMessage;
+                } else {
+                    posts.forEach(post => {
+                        const formattedDate = formatDate(post.created_at);
+                        const postElement = document.createElement('div');
+                        postElement.classList.add('col-lg-4', 'col-md-6', 'wow', 'fadeInUp');
+                        postElement.setAttribute('data-wow-delay', '0.1s');
+                        postElement.innerHTML = `
+                            <div class="service-item position-relative h-100">
+                                <div class="service-text rounded-3 shadow blogHover">
+                                    <div class="mb-4">
+                                        <img class="img-fluid" src="${post.imageUrl}" alt="Icon" style="border-radius: 10px 10px 0 0;">
                                     </div>
-                                    <div class="service-btn rounded-0 rounded-bottom">
-                                        <a class="text-primary fw-medium" href="/viewblog/${post.id}">Read More<i class="bi bi-chevron-double-right ms-2"></i></a>
+                                    <div class="p-4">
+                                        <a href="/viewblog/${post.id}" class="mb-3 cursor-pointer fs-4 fw-bold text-decoration-none">${post.title}</a>
+                                        <p class="text-start my-2">Published on : ${formattedDate}</p>
                                     </div>
                                 </div>
-                            `;
-                            blogPostsElement.appendChild(postElement);
-                        });
-                    })
-                    .catch(error => console.error('Error fetching blog posts:', error))
-                    .finally(() => {
-                        document.getElementById('spinner').classList.remove('show'); // Remove spinner
+                                <div class="service-btn rounded-0 rounded-bottom">
+                                    <a class="text-primary fw-medium" href="/viewblog/${post.id}">Read More<i class="bi bi-chevron-double-right ms-2"></i></a>
+                                </div>
+                            </div>
+                        `;
+                        blogPostsElement.appendChild(postElement);
                     });
-            };
-
-            // Handle form submission for search
-            const searchForm = document.getElementById('searchForm');
-            searchForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                const searchInput = document.getElementById('searchInput').value.trim();
-                fetchBlogPosts(1, searchInput); // Fetch first page of search results
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching blog posts:', error);
+                blogPostsElement.innerHTML = noDataMessage; // Display no data message on error
+            })
+            .finally(() => {
+                document.getElementById('spinner').classList.remove('show'); // Remove spinner
             });
+    };
 
-            // Fetch initial blog posts
-            fetchBlogPosts();
-        });
+    // Handle form submission for search and category
+    const searchForm = document.getElementById('searchForm');
+    searchForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const searchInput = document.getElementById('searchInput').value.trim();
+        const category = document.getElementById('categoryDropdown').value;
+        fetchBlogPosts(1, searchInput, category); // Fetch first page of search results
+    });
+
+    // Handle category dropdown change
+    const categoryDropdown = document.getElementById('categoryDropdown');
+    categoryDropdown.addEventListener('change', (event) => {
+        const searchInput = document.getElementById('searchInput').value.trim();
+        const category = event.target.value;
+        fetchBlogPosts(1, searchInput, category); // Fetch first page of filtered results based on category
+    });
+
+    // Fetch initial blog posts without search or category filter
+    fetchBlogPosts();
+
+});
+
     </script>
 
     <script>
