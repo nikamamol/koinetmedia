@@ -45,7 +45,7 @@ app.get("/services", (req, res) => {
 app.get("/blog", (req, res) => {
     res.render("blog", { title: "Blog" });
 });
-app.get("/addblog", verifyToken, (req, res) => {
+app.get("/addblog", (req, res) => {
     res.render("addblog", { title: "Add Blog" });
 });
 app.get("/viewblog/:id", (req, res) => {
@@ -194,14 +194,35 @@ app.post('/api/addblog', (req, res) => {
 });
 //get blog post on blog page
 app.get('/api/blogs', (req, res) => {
-    db.getAllBlogPosts((err, rows) => {
+    const page = parseInt(req.query.page) || 1; // Current page number, default to 1
+    const limit = parseInt(req.query.limit) || 10; // Number of items per page, default to 10
+    const search = req.query.search || ''; // Search query
+
+    // Calculate offset
+    const offset = (page - 1) * limit;
+
+    db.getAllBlogPosts(limit, offset, search, (err, rows) => {
         if (err) {
             res.status(500).send('Error retrieving blog posts');
         } else {
             res.status(200).json(rows);
         }
     });
+});
 
+//use search and pagination in  blog page 
+app.get('/api/blogs', (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 6; // Number of blogs per page
+    const search = req.query.search || '';
+
+    db.getPaginatedBlogPosts(page, limit, search, (err, rows) => {
+        if (err) {
+            res.status(500).send('Error retrieving blog posts');
+        } else {
+            res.status(200).json(rows);
+        }
+    });
 });
 
 app.get('/api/blog/:id', (req, res) => {

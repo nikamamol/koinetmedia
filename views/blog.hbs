@@ -28,9 +28,26 @@
     {{>nav}}
 
     <!-- Page Header -->
-    <div id="particles-js" class="container-fluid bgColor py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid bgColor py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5 d-flex justify-content-center align-items-center vh-100">
             <h1 class="display-2 text-dark mb-4 animated slideInDown fw-bold"><span class="text_red">W</span>elcome to <span class="text_red">K</span>oinet <span class="text_red">M</span>edia <span class="text_red">B</span>log</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form id="searchForm">
+                    <div class="input-group w-50 mx-auto py-2 rounded-pill serchBg p-2">
+                        <input type="text" class="form-control rounded-pill" placeholder="Search..." id="searchInput" name="search">
+                        <div class="input-group-append ">
+                            <button class="btn btn-outline-dark rounded-pill" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -43,28 +60,7 @@
         </div>
     </div>
 
-    <!-- Pagination -->
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-{{>recaptch}}
-
+    {{>recaptch}}
     {{>footer}}
 
     <!-- Back to Top Button -->
@@ -99,111 +95,71 @@
 
     <!-- Fetch and Display Blog Posts -->
     <script>
-          const monthNames = [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-
-    // Function to format date into "DD Mon YYYY" format
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = date.getDate();
-        const month = monthNames[date.getMonth()];
-        const year = date.getFullYear();
-        return `${day} ${month} ${year}`;
-    };
-
         document.addEventListener('DOMContentLoaded', () => {
-           
+            const monthNames = [
+                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+            ];
 
-            fetch('/api/blogs')
-                .then(response => response.json())
-                .then(posts => {
-                    const blogPostsElement = document.querySelector('#blogPosts .row');
-                    posts.forEach(post => {
-                         const formattedDate = formatDate(post.created_at);
-                        const postElement = document.createElement('div');
-                        postElement.classList.add('col-lg-4', 'col-md-6', 'wow', 'fadeInUp');
-                        postElement.setAttribute('data-wow-delay', '0.1s');
-                        postElement.innerHTML = `
-                            <div class="service-item position-relative h-100">
-                                <div class="service-text rounded-3 shadow blogHover">
-                                    <div class="mb-4">
-                                        <img class="img-fluid" src="${post.imageUrl}" alt="Icon" style="border-radius: 10px 10px 0 0;">
+            // Function to format date into "DD Mon YYYY" format
+            const formatDate = (dateString) => {
+                const date = new Date(dateString);
+                const day = date.getDate();
+                const month = monthNames[date.getMonth()];
+                const year = date.getFullYear();
+                return `${day} ${month} ${year}`;
+            };
+
+            const blogPostsElement = document.querySelector('#blogPosts .row');
+
+            const fetchBlogPosts = (page = 1, search = '') => {
+                fetch(`/api/blogs?page=${page}&search=${search}`)
+                    .then(response => response.json())
+                    .then(posts => {
+                        blogPostsElement.innerHTML = ''; // Clear previous posts
+
+                        posts.forEach(post => {
+                            const formattedDate = formatDate(post.created_at);
+                            const postElement = document.createElement('div');
+                            postElement.classList.add('col-lg-4', 'col-md-6', 'wow', 'fadeInUp');
+                            postElement.setAttribute('data-wow-delay', '0.1s');
+                            postElement.innerHTML = `
+                                <div class="service-item position-relative h-100">
+                                    <div class="service-text rounded-3 shadow blogHover">
+                                        <div class="mb-4">
+                                            <img class="img-fluid" src="${post.imageUrl}" alt="Icon" style="border-radius: 10px 10px 0 0;">
+                                        </div>
+                                        <div class="p-4">
+                                            <a href="/viewblog/${post.id}" class="mb-3 cursor-pointer fs-4 fw-bold text-decoration-none">${post.title}</a>
+                                            <p class="text-start my-2">Published on : ${formattedDate}</p>
+                                        </div>
                                     </div>
-                                    <div class="px-3">
-                                        <a href="/viewblog/${post.id}" class="mb-3 cursor-pointer fs-4 fw-bold text-decoration-none">${post.title}</a>
-                                        <p class="text-start py-3 fw-bold">Published on : ${formattedDate}</p>
-                                        {{!-- <p class="text-start fw-bold">Published on : ${post.category}</p> --}}
+                                    <div class="service-btn rounded-0 rounded-bottom">
+                                        <a class="text-primary fw-medium" href="/viewblog/${post.id}">Read More<i class="bi bi-chevron-double-right ms-2"></i></a>
                                     </div>
                                 </div>
-                                <div class="service-btn rounded-0 rounded-bottom">
-                                    <a class="text-primary fw-medium" href="/viewblog/${post.id}">Read More<i class="bi bi-chevron-double-right ms-2"></i></a>
-                                </div>
-                            </div>
-                        `;
-                        blogPostsElement.appendChild(postElement);
+                            `;
+                            blogPostsElement.appendChild(postElement);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching blog posts:', error))
+                    .finally(() => {
+                        document.getElementById('spinner').classList.remove('show'); // Remove spinner
                     });
-                })
-                .catch(error => console.error('Error fetching blog posts:', error))
-                .finally(() => {
-                    // Remove spinner when done loading
-                    document.getElementById('spinner').classList.remove('show');
-                });
+            };
+
+            // Handle form submission for search
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const searchInput = document.getElementById('searchInput').value.trim();
+                fetchBlogPosts(1, searchInput); // Fetch first page of search results
+            });
+
+            // Fetch initial blog posts
+            fetchBlogPosts();
         });
-    </script> 
-  <script>
-          const monthNames = [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-
-    // Function to format date into "DD Mon YYYY" format
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = date.getDate();
-        const month = monthNames[date.getMonth()];
-        const year = date.getFullYear();
-        return `${day} ${month} ${year}`;
-    };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const formattedDate = formatDate(post.created_at);
-
-            fetch('/api/blogs')
-                .then(response => response.json())
-                .then(posts => {
-                    const blogPostsElement = document.querySelector('#blogPosts .row');
-                    posts.forEach(post => {
-                        const postElement = document.createElement('div');
-                        postElement.classList.add('col-lg-4', 'col-md-6', 'wow', 'fadeInUp');
-                        postElement.setAttribute('data-wow-delay', '0.1s');
-                        postElement.innerHTML = `
-                            <div class="service-item position-relative h-100">
-                                <div class="service-text rounded-3 shadow blogHover">
-                                    <div class="mb-4">
-                                        <img class="img-fluid" src="${post.imageUrl}" alt="Icon" style="border-radius: 10px 10px 0 0;">
-                                    </div>
-                                    <div class="p-4">
-                                        <a href="/viewblog/${post.id}" class="mb-3 cursor-pointer fs-4 fw-bold text-decoration-none">${post.title}</a>
-                                        <p class="text-start my-2">Published on : ${formattedDate}</p>
-                                    </div>
-                                </div>
-                                <div class="service-btn rounded-0 rounded-bottom">
-                                    <a class="text-primary fw-medium" href="/viewblog/${post.id}">Read More<i class="bi bi-chevron-double-right ms-2"></i></a>
-                                </div>
-                            </div>
-                        `;
-                        blogPostsElement.appendChild(postElement);
-                    });
-                })
-                .catch(error => console.error('Error fetching blog posts:', error))
-                .finally(() => {
-                    // Remove spinner when done loading
-                    document.getElementById('spinner').classList.remove('show');
-                });
-        });
-    </script> 
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded',function(){

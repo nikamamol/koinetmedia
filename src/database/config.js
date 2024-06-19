@@ -39,8 +39,16 @@ const addContactFormEntry = (entryData, callback) => {
 };
 
 // Function to fetch all blog posts
-const getAllBlogPosts = (callback) => {
-    connection.query("SELECT * FROM blogs2", (err, rows) => {
+const getAllBlogPosts = (limit, offset, search, callback) => {
+    let query = "SELECT * FROM blogs2";
+
+    if (search) {
+        query += ` WHERE title LIKE '%${search}%' OR content LIKE '%${search}%'`;
+    }
+
+    query += ` LIMIT ${limit} OFFSET ${offset}`;
+
+    connection.query(query, (err, rows) => {
         if (err) {
             callback(err, null);
         } else {
@@ -48,6 +56,27 @@ const getAllBlogPosts = (callback) => {
         }
     });
 };
+
+const getPaginatedBlogPosts = (page, limit, search, callback) => {
+    const offset = (page - 1) * limit;
+    let query = `SELECT * FROM blogs2`;
+
+    // If there is a search term, modify the query
+    if (search) {
+        query += ` WHERE title LIKE '%${search}%'`; // Modify as per your schema
+    }
+
+    query += ` ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+
+    db.query(query, (err, rows) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, rows);
+        }
+    });
+};
+
 
 const addBlogPost = (title, category, content, imageUrl, callback) => {
     const sql =
@@ -145,4 +174,5 @@ module.exports = {
     loginUser: loginUser,
     getBlogPostById: getBlogPostById,
     addEmailRecord: addEmailRecord,
+    getPaginatedBlogPosts: getPaginatedBlogPosts
 };
