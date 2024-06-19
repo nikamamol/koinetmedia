@@ -189,6 +189,7 @@ app.post('/api/addblog', (req, res) => {
         });
     }
 });
+
 //get blog post on blog page
 app.get('/api/blogs', (req, res) => {
     const page = parseInt(req.query.page) || 1;
@@ -207,7 +208,7 @@ app.get('/api/blogs', (req, res) => {
     });
 });
 
-
+//get blog with id 
 app.get('/api/blog/:id', (req, res) => {
     const blogId = req.params.id;
     db.getBlogPostById(blogId, (err, blogPost) => {

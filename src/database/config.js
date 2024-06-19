@@ -39,6 +39,7 @@ const addContactFormEntry = (entryData, callback) => {
     );
 };
 
+//get all blog with search and category select
 const getAllBlogPosts = (limit, offset, search, category, callback) => {
     let query = "SELECT * FROM blogs2";
 
@@ -69,9 +70,7 @@ const getAllBlogPosts = (limit, offset, search, category, callback) => {
     });
 };
 
-
-
-
+//add blog
 const addBlogPost = (title, category, content, imageUrl, callback) => {
     const sql =
         "INSERT INTO blogs2 (title, category, content, imageUrl) VALUES (?, ?, ?, ?)";
