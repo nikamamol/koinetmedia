@@ -165,7 +165,7 @@ app.post('/api/addblog', (req, res) => {
                 console.error('Error inserting blog post:', err);
                 return res.status(500).json({ error: 'Error inserting blog post' });
             }
-            res.status(200).json({ message: 'Blog created successfully', imageUrl });
+            res.status(200).json({ message: 'Blog created successfully' });
         });
     } else if (req.body.imageUrl) {
         // If imageUrl is provided in the request body directly

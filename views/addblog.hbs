@@ -9,13 +9,12 @@
     <link rel="stylesheet" href="../public/styles/style.css">
     <style>
         .tox-tinymce {
-    border-radius: 20px;
+            border-radius: 20px;
+            }
 
-}
-
-body{
+        body{
             background-color: #F5F5F5;
-}
+            }
     </style>
     <script src="https://cdn.tiny.cloud/1/fqzuwll7ascld9x8g3841pclczljcxkx9twy3pmx7lwswiey/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
@@ -33,11 +32,6 @@ body{
                             <input type="text" class="form-control" id="title" name="title" required>
                         </div>
                         <div class="form-group my-3">
-                            {{!-- <label for="category">Category</label>
-                            <select class="form-control" id="category" name="category" required>
-                                <option value="user">User</option>
-                                <option value="admin">Admin</option>
-                            </select> --}}
                              <label for="category" class="mb-1">Category</label>
                 <select class="form-control" id="category" name="category" required>
                   <option value="">Select Category</option>
@@ -87,12 +81,13 @@ body{
                     Processing</option>
                 </select>
                         </div>
-                        <textarea id="myTextarea" name="content" required>Create Your Blog!</textarea>
-                        <div class="form-group my-3">
+                                <div class="form-group my-3">
                             <label for="imageUrl">Image URL</label>
                             <input type="text" class="form-control" id="imageUrl" name="imageUrl" required>
                         </div>
-                        <div class="text-center">
+                        <textarea id="myTextarea" name="content" required>Create Your Blog!</textarea>
+                
+                        <div class="text-center mt-2">
                             <button type="submit" class="btn btn-danger w-25 rounded-5 btn-lg">Submit</button>
                         </div>
                     </form>
