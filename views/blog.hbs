@@ -37,8 +37,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 ">
-                <form id="searchForm" class="d-flex ">
-                    <div class="input-group w-50 mx-auto py-2 rounded-pill serchBg p-2">
+                <form id="searchForm" class="d-flex justify-content-between ">
+                    <div class="input-group w-50  py-2 rounded-pill serchBg p-2">
                         <input type="text" class="form-control rounded-pill" placeholder="Search..." id="searchInput" name="search">
                         <div class="input-group-append ">
                             <button class="btn btn-outline-dark rounded-pill ms-1" type="submit">
@@ -139,7 +139,7 @@
 
     <!-- Fetch and Display Blog Posts -->
     <script>
-  document.addEventListener('DOMContentLoaded', () => {
+ document.addEventListener('DOMContentLoaded', () => {
     const monthNames = [
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -158,6 +158,8 @@
     const noDataMessage = '<div class="col text-center"><p>No blog posts available.</p></div>';
 
     const fetchBlogPosts = (page = 1, search = '', category = '') => {
+        const userName = localStorage.getItem('userName'); // Retrieve user's name from local storage
+
         let url = `/api/blogs?page=${page}`;
         if (search) {
             url += `&search=${search}`;
@@ -184,10 +186,13 @@
                                     <div class="mb-4">
                                         <img class="img-fluid" src="${post.imageUrl}" alt="Icon" style="border-radius: 10px 10px 0 0;">
                                     </div>
-                                    <div class="p-4">
-                                        <a href="/viewblog/${post.id}" class="mb-3 cursor-pointer fs-4 fw-bold text-decoration-none">${post.title}</a>
-                                        <p class="text-start my-2">Published on : ${formattedDate}</p>
+                                  <div class="p-4">
+                                    <a href="/viewblog/${post.id}" class="mb-3 cursor-pointer fs-4 fw-bold text-decoration-none">${post.title}</a>
+                                    <div class="d-flex justify-content-between my-3">
+                                        <p class="mb-0">Published on: ${formattedDate}</p>
+                                        <p class="mb-0">Category: ${post.category}</p>
                                     </div>
+                                  </div>
                                 </div>
                                 <div class="service-btn rounded-0 rounded-bottom">
                                     <a class="text-primary fw-medium" href="/viewblog/${post.id}">Read More<i class="bi bi-chevron-double-right ms-2"></i></a>
@@ -223,9 +228,12 @@
         const category = event.target.value;
         fetchBlogPosts(1, searchInput, category); // Fetch first page of filtered results based on category
     });
+
     // Fetch initial blog posts without search or category filter
     fetchBlogPosts();
 });
+
+
     </script>
 
     <script>

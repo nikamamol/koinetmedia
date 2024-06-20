@@ -236,9 +236,9 @@ app.post("/postContact", (req, res) => {
     const entryData = req.body;
     db.addContactFormEntry(entryData, (err, result) => {
         if (err) {
-            res.status(500).send("Error adding contact form entry");
+            res.status(500).send(err);
         } else {
-            res.status(201).send("Contact form entry added successfully");
+            res.status(201).send("Thank you !");
         }
     });
 });
@@ -283,15 +283,13 @@ app.post("/register", (req, res) => {
 
     db.addUser(entryData, (err, result) => {
         if (err) {
-            console.error("Error registering user:", err);
+            // console.error("Error registering user:", err);
             return res.status(500).send("Error registering user.");
         }
 
         // Generate JWT token
-        const token = jwt.sign({ email: email }, secretKey, { expiresIn: "1h" });
-        res.status(201).json({ message: "User registered successfully.", token });
-
-
+        const token = jwt.sign({ email: email, name: `${firstName} ${lastName}` }, secretKey, { expiresIn: "1h" });
+        res.status(201).json({ message: "User registered successfully.", token, name: `${firstName} ${lastName}` });
     });
 });
 
@@ -303,10 +301,11 @@ app.post("/login", async(req, res) => {
             res.status(500).json({ message: "Error logging in user." });
         } else {
             if (result.length > 0) {
-                const token = jwt.sign({ email: email }, secretKey, { expiresIn: "1h" });
-                res.status(200).json({ message: "User logged in successfully.", token: token });
+                const user = result[0]; // Assuming the user object contains 'firstName' and 'lastName'
+                const token = jwt.sign({ email: email, name: `${user.firstName} ${user.lastName}` }, secretKey, { expiresIn: "1h" });
+                res.status(200).json({ message: "User logged in successfully.", token: token, name: `${user.firstName} ${user.lastName}` });
             } else {
-                res.status(401).json({ message: "Invalid email or password." });
+                res.status(401).json({ message: "User Not Logined In." });
             }
         }
     });

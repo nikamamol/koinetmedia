@@ -203,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(post => {
             // Format the created_at date
             const formattedDate = formatDate(post.created_at);
+             const userName = localStorage.getItem('userName');
 
             // Create HTML structure for blog post details
             const blogPostDetails = document.getElementById('blogPostDetails');
@@ -229,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <img src="${post.imageUrl}" class="img-fluid mb-4" alt="blogimg" width="100%">
                             <p class="text-dark">
                                 <span class="float-end">
-                                      <span class=" fw-bold">Category : ${post.category}</span>
+                                      <span class=" fw-bold">Author : ${userName}</span>
                                 </span>
                                 <span class="fw-bold">
                                     Published on: <span class="fw-bold">${formattedDate}</span>
