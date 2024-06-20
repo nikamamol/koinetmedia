@@ -230,7 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             <img src="${post.imageUrl}" class="img-fluid mb-4" alt="blogimg" width="100%">
                             <p class="text-dark">
                                 <span class="float-end">
-                                      <span class=" fw-bold">Author : ${userName}</span>
+                                      {{!-- <span class=" fw-bold">Author : ${userName}</span> --}}
+                                      <span class=" fw-bold">Category : ${post.category}</span>
                                 </span>
                                 <span class="fw-bold">
                                     Published on: <span class="fw-bold">${formattedDate}</span>

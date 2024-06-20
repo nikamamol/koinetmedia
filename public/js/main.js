@@ -112,7 +112,7 @@ document
             })
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error("Error adding contact form entry");
+                    throw new Error("Error");
                 }
                 return response.text();
             })
@@ -121,8 +121,8 @@ document
                 document.getElementById("contactForm").reset(); // Clear form
             })
             .catch((error) => {
-                console.error("Error:", error);
-                alert("Error adding contact form entry");
+                // console.error("Error:", error);
+                alert(error);
             });
     });
 

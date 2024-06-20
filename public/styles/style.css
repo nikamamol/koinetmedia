@@ -10,6 +10,12 @@ body {
     font-style: 300; */
 }
 
+.mainHeadingName {
+    font-weight: 800px;
+    font-weight: 900;
+    font-size: 100px;
+}
+
 :root {
     --primary: #4761FF;
     --secondary: #555555;
@@ -1062,4 +1068,23 @@ body {
     max-height: 200px;
     /* Adjust the height as needed */
     overflow-x: auto;
+}
+
+
+/* blog button */
+
+.moreBlogBtn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #BB2D3B;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 15px 5px 15px 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.moreBlogBtn:hover {
+    transform: scale(1.1);
+    background-color: #49d6e0b2;
 }
