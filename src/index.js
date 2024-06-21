@@ -57,6 +57,9 @@ app.get("/about", (req, res) => {
 app.get("/contact", (req, res) => {
     res.render("contact", { title: "Contact Us" });
 });
+app.get("/thanks", (req, res) => {
+    res.render("thanks", { title: "Thanks" });
+});
 app.get("/register", (req, res) => {
     res.render("register", { title: "Register" });
 });
@@ -311,7 +314,8 @@ app.post("/login", async(req, res) => {
     });
 });
 
-// nodemaile
+// nodemaile 
+// only email 
 app.post('/send-email', async(req, res) => {
     const { email } = req.body;
 
@@ -352,6 +356,107 @@ app.post('/send-email', async(req, res) => {
         res.status(500).send('Error sending email');
     }
 });
+
+//download media kit email
+app.post('/downloadmedia-kit', async(req, res) => {
+    const { email } = req.body;
+
+    // Set up Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.MAIL_USER,
+            pass: process.env.MAIL_PASSWORD
+        }
+    });
+
+
+    // Email options
+    const mailOptions = {
+        from: email,
+        to: process.env.MAIL_TO,
+        subject: `Download Media-Kit PDF : ${email}`,
+        text: `You have a new download the media-kit pdf with the email: ${email}`
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+
+        // Insert email data into the database
+        db.addEmailRecord({ email }, (err, insertId) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error saving email data to database');
+                return;
+            }
+            // console.log('Email data saved to database with ID:', insertId);
+
+            // res.send("Download the media-kit pdf");
+            if (res.send == "Download the media-kit pdf") {
+                res.redirect("/");
+            }
+            setTimeout(() => {
+                res.redirect("/thanks");
+
+            }, 0)
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error sending email');
+    }
+});
+
+//download case-studies email
+app.post('/downloadcase-studies', async(req, res) => {
+    const { email } = req.body;
+
+    // Set up Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.MAIL_USER,
+            pass: process.env.MAIL_PASSWORD
+        }
+    });
+
+
+    // Email options
+    const mailOptions = {
+        from: email,
+        to: process.env.MAIL_TO,
+        subject: `Download Case-Studies PDF : ${email}`,
+        text: `You have a new download the case-studies pdf with the email: ${email}`
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+
+        // Insert email data into the database
+        db.addEmailRecord({ email }, (err, insertId) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error saving email data to database');
+                return;
+            }
+            // console.log('Email data saved to database with ID:', insertId);
+
+            // res.send("Download the media-kit pdf");
+            if (res.send == "Download the case-studies pdf") {
+                res.redirect("/");
+            }
+            setTimeout(() => {
+                res.redirect("/thanks");
+
+            }, 0)
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error sending email');
+    }
+});
+
+
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

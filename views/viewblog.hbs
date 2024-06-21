@@ -2,231 +2,194 @@
 
 <html lang="en">
 
-  <head>
-    <meta charset="utf-8" />
-    <title>{{title}}</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="" name="keywords" />
-    <meta content="" name="description" />
+<head>
+  <meta charset="utf-8" />
+  <title>{{title}}</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="" name="keywords" />
+  <meta content="" name="description" />
 
-    <!-- Favicon -->
-    {{! <link href="img/favicon.ico" rel="icon"> }}
+  <!-- Favicon -->
+  {{! <link href="img/favicon.ico" rel="icon"> }}
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Roboto:wght@500;700&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Roboto:wght@500;700&display=swap"
+    rel="stylesheet" />
 
-    <!-- Icon Font Stylesheet -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet" />
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
+  <!-- Libraries Stylesheet -->
+  <link href="lib/animate/animate.min.css" rel="stylesheet" />
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
 
-    <!-- Customized Bootstrap Stylesheet -->
-    {{! <link href="css/bootstrap.min.css" rel="stylesheet"> }}
-    <link href="../public/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Customized Bootstrap Stylesheet -->
+  {{! <link href="css/bootstrap.min.css" rel="stylesheet"> }}
+  <link href="../public/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Template Stylesheet -->
-    <link href="../public/styles/style.css" rel="stylesheet" />
-    <script
-      src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"
-    ></script>
+  <!-- Template Stylesheet -->
+  <link href="../public/styles/style.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
-  </head>
+  <!-- Include html2pdf.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
-  <body>
-    <!-- Spinner Start -->
-    <div
-      id="spinner"
-      class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
-    >
-      <div
-        class="spinner-border text-primary"
-        role="status"
-        style="width: 3rem; height: 3rem;"
-      ></div>
-    </div>
-    <!-- Spinner End -->
+</head>
 
-    <!-- Topbar Start -->
-    <div
-      class="container-fluid bg-primary text-white d-none d-lg-flex scrolling-navbar"
-    >
-      <div class="container py-3">
-        <div class="d-flex align-items-center scrolling-content">
+<body>
+  <!-- Spinner Start -->
+  <div id="spinner"
+    class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+  </div>
+  <!-- Spinner End -->
 
-          <div class="ms-auto d-flex align-items-center">
-            <small class="ms-4">
-              <i class="fa fa-map-marker-alt me-3"></i>Kharadi, Pune,
-              Maharashtra, India, 411014
-            </small>
-            <small class="ms-4">
-              <i class="fa fa-envelope me-3"></i>info@koinetmedia.com
-            </small>
-            <small class="ms-4">
-              <i class="fa fa-phone-alt me-3"></i>+91 9021568448
-            </small>
-            <div class="ms-3 d-flex">
-              <a
-                class="btn btn-sm-square btn-light text-primary rounded-circle ms-2"
-                href="https://www.facebook.com/koiNetMediaITES"
-              >
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a
-                class="btn btn-sm-square btn-light text-primary rounded-circle ms-2"
-                href="https://x.com/MediaKoinet"
-              >
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a
-                class="btn btn-sm-square btn-light text-primary rounded-circle ms-2"
-                href="https://www.linkedin.com/company/31556606/"
-              >
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-              <a
-                class="btn btn-sm-square btn-light text-primary rounded-circle ms-2"
-                href="https://www.instagram.com/koinetmedia"
-              >
-                <i class="fab fa-instagram p-2"></i>
-              </a>
-            </div>
+  <!-- Topbar Start -->
+  <div class="container-fluid bg-primary text-white d-none d-lg-flex scrolling-navbar">
+    <div class="container py-3">
+      <div class="d-flex align-items-center scrolling-content">
+
+        <div class="ms-auto d-flex align-items-center">
+          <small class="ms-4">
+            <i class="fa fa-map-marker-alt me-3"></i>Kharadi, Pune,
+            Maharashtra, India, 411014
+          </small>
+          <small class="ms-4">
+            <i class="fa fa-envelope me-3"></i>info@koinetmedia.com
+          </small>
+          <small class="ms-4">
+            <i class="fa fa-phone-alt me-3"></i>+91 9021568448
+          </small>
+          <div class="ms-3 d-flex">
+            <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2"
+              href="https://www.facebook.com/koiNetMediaITES">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href="https://x.com/MediaKoinet">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2"
+              href="https://www.linkedin.com/company/31556606/">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2"
+              href="https://www.instagram.com/koinetmedia">
+              <i class="fab fa-instagram p-2"></i>
+            </a>
           </div>
         </div>
       </div>
     </div>
-    <!-- Topbar End -->
-    <!-- Navbar Start -->
-    <div class="container-fluid bg-white sticky-top">
-      <div class="container">
+  </div>
+  <!-- Topbar End -->
+  <!-- Navbar Start -->
+<div class="container-fluid bg-white sticky-top">
+    <div class="container">
         <nav class="navbar navbar-expand-lg bg-white navbar-light p-lg-0">
-          <a href="index.html" class="navbar-brand">
-            <img
-              src="../public/images/Logo.png"
-              alt="logo"
-              width="100px"
-              height="30px"
-            />
-            <p>Koinet Media Ltd.</p>
-          </a>
-          <button
-            type="button"
-            class="navbar-toggler me-0"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <a href="index.html">
-              <h2 class="text-white fw-bold me-5"></h2>
+            <a href="/" class="navbar-brand">
+                <img src="../public/images/Logo.png" alt="logo" width="150px" height="40px" />
+                <h5 class="mt-2">Koinet Media Ites Pvt. Ltd.</h5>
             </a>
-            <div class="navbar-nav ms-auto">
-
-              <a href="/" class="nav-item nav-link">Home</a>
-              <a href="/services" class="nav-item nav-link">Services</a>
-              <a href="/blog" class="nav-item nav-link">Blog</a>
-              <a href="/about" class="nav-item nav-link">About Us</a>
-              <a href="/contact" class="nav-item nav-link">Contact Us</a>
-
+            <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <a href="index.html">
+                    <h2 class="text-white fw-bold me-5"></h2>
+                </a>
+                <div class="navbar-nav ms-auto">
+                    <a href="/" id="nav-home" class="nav-item nav-link">Home</a>
+                    <a href="/services" id="nav-services" class="nav-item nav-link">Services</a>
+                    <a href="/blog" id="nav-blog" class="nav-item nav-link">Blog</a>
+                    <a href="/about" id="nav-about" class="nav-item nav-link">About Us</a>
+                    <a href="/contact" id="nav-contact" class="nav-item nav-link ">Contact Us</a>
+                </div>
             </div>
-          </div>
+             
         </nav>
-      </div>
     </div>
+</div>
 
   <div id="blogPostDetails" class="container-fluid mt-4">
-       
-   </div>
-    {{! blog details end }}
-   {{>recaptch}}
 
-    {{>footer}}
-    <a
-      href="#"
-      class="btn btn-lg btn-danger btn-lg-square rounded-circle back-to-top"
-    ><i class="bi bi-arrow-up"></i></a>
-    <!-- JavaScript Libraries -->
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
-    ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  </div>
+  {{! blog details end }}
+  {{>recaptch}}
 
-    <script src="../public/js/main.js"></script>
+  {{>footer}}
+  <a href="#" class="btn btn-lg btn-danger btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+  <!-- JavaScript Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Template Javascript -->
-    {{!-- <script src="../public/js/main.js"></script> --}}
-     <script>
-      // Assuming post.created_at is a string in ISO 8601 format (e.g., "2024-12-28T00:00:00Z")
+  <script src="../public/js/main.js"></script>
 
-// Format the date
-document.addEventListener('DOMContentLoaded', () => {
-    // Array of month names for formatting
-    const monthNames = [
+  <!-- Template Javascript -->
+  {{!-- <script src="../public/js/main.js"></script> --}}
+  <script>
+    // Format the date
+    document.addEventListener('DOMContentLoaded', () => {
+      // Array of month names for formatting
+      const monthNames = [
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
+      ];
 
-    // Function to format date into "DD Mon YYYY" format
-    const formatDate = (dateString) => {
+      // Function to format date into "DD Mon YYYY" format
+      const formatDate = (dateString) => {
         const date = new Date(dateString);
         const day = date.getDate();
         const month = monthNames[date.getMonth()];
         const year = date.getFullYear();
         return `${day} ${month} ${year}`;
-    };
+      };
 
-    // Extract the blog post ID from the URL
-    const postId = window.location.pathname.split('/').pop();
+      // Extract the blog post ID from the URL
+      const postId = window.location.pathname.split('/').pop();
 
-    // Fetch the specific blog post
-    fetch(`/api/blog/${postId}`)
+      // Fetch the specific blog post
+      fetch(`/api/blog/${postId}`)
         .then(response => response.json())
         .then(post => {
-            // Format the created_at date
-            const formattedDate = formatDate(post.created_at);
-             const userName = localStorage.getItem('userName');
+          // Format the created_at date
+          const formattedDate = formatDate(post.created_at);
+          const userName = localStorage.getItem('userName');
 
-            // Create HTML structure for blog post details
-            const blogPostDetails = document.getElementById('blogPostDetails');
-            blogPostDetails.innerHTML = `
+          // Create HTML structure for blog post details
+          const blogPostDetails = document.getElementById('blogPostDetails');
+          blogPostDetails.innerHTML = `
                 <div class="row">
                     <div class="col-lg-1 mt-5 py-5">
                         <div class="col-12 col-lg-6 text-start text-lg-end my-auto sticky-icons d-flex flex-sm-row flex-lg-column">
                             <a class="btn btn-square btn-danger rounded-circle me-2 mb-2" href="https://x.com/MediaKoinet">
                                 <i class="fab fa-twitter"></i>
                             </a>
-                            <a class="btn btn-square btn-danger rounded-circle me-2 mb-2" href="https://www.facebook.com/koiNetMediaITES">
+                            <a class="btn btn-square btn-danger rounded-circle me-2 mb-2" 
+                            href="https://www.facebook.com/koiNetMediaITES">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a class="btn btn-square btn-danger rounded-circle me-2 mb-2" href="https://www.instagram.com/koinetmedia">
+                            <a class="btn btn-square btn-danger rounded-circle me-2 mb-2" 
+                            href="https://www.instagram.com/koinetmedia">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                            <a class="btn btn-square btn-danger rounded-circle me-2 mb-2" href="https://www.linkedin.com/company/31556606">
+                            <a class="btn btn-square btn-danger rounded-circle me-2 mb-2" 
+                            href="https://www.linkedin.com/company/31556606">
                                 <i class="fab fa-linkedin-in"></i>
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-7 mx-auto justify-items-center">
-                        <div class="col-lg-12">
+                         <div class="mb-2 text-center">
+                           <button id="downloadBtn" class="btn btn-danger rounded-pill btn-lg">Download PDF <i class="fa fa-download ms-2"></i></button>
+                         </div>
+                        <div id="blogContent" class="col-lg-12">
                             <img src="${post.imageUrl}" class="img-fluid mb-4" alt="blogimg" width="100%">
                             <p class="text-dark">
                                 <span class="float-end">
@@ -245,21 +208,67 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `;
+
+          // Add event listener to download button
+         
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  // Fetch the blog post content and prepare the PDF
+  fetch(`/api/blog/${postId}`) // Replace with your actual endpoint
+    .then(response => response.json())
+    .then(post => {
+      // Create a new element to hold the content
+      const element = document.createElement('div');
+      element.innerHTML = `
+        <div>
+          <h1>${post.title}</h1>
+          <p>Published on: ${new Date(post.publishedDate).toLocaleDateString()}</p>
+          <p>Category: ${post.category}</p>
+          ${post.content}
+        </div>
+      `;
+
+      // Wait for images to load
+      const images = element.getElementsByTagName('img');
+      const loadPromises = [];
+      for (let img of images) {
+        if (!img.complete) {
+          loadPromises.push(new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+          }));
+        }
+      }
+
+      Promise.all(loadPromises)
+        .then(() => {
+          // Generate PDF
+          html2pdf(element, {
+            margin: 1,
+            filename: `${post.title}.pdf`,
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+          });
         })
         .catch(error => {
-            console.error('Error fetching blog post:', error);
-            // Handle error display if needed
-            const blogPostDetails = document.getElementById('blogPostDetails');
-            blogPostDetails.innerHTML = '<p>Error loading blog post</p>';
+          {{!-- console.error('Error loading images:', error); --}}
+          // Handle error display if needed
+          const blogPostDetails = document.getElementById('blogPostDetails');
+          blogPostDetails.innerHTML = '<p>Error loading blog post images</p>';
         });
-});
-
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+    })
+    .catch(error => {
+      {{!-- console.error('Error fetching blog post:', error); --}}
+      // Handle error display if needed
+      const blogPostDetails = document.getElementById('blogPostDetails');
+      blogPostDetails.innerHTML = '<p>Error loading blog post</p>';
+          });
+       });
+    });
+ })
+        
+  
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
 </html>
-
-
-
-

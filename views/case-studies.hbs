@@ -43,13 +43,56 @@
                 <img src="../public/images/casestudies.jpg" alt="casestudies" class="img-fluid"/>
               </div>
                <div class="text-center my-3">
-                      <button id="downloadButtoncasestudies" class="btn btn-danger btn-lg p-4 hover_btn">Download Now</button>
+                      <button id="open_modal" class="btn btn-danger btn-lg p-4 hover_btn">Download Now</button>
                    </div>
             </div>
           </div> 
         </div>
       </div>
     </div>
+
+    {{!-- popup logic --}}
+
+    <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content p-5 shadow border-0 rounded-5">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img src="public/images/Logo.png" alt="" class="img-fluid mb-3" width="200px" height="50px">
+          <p class="fw-bold fs-4">Case-Studies Of Koinet Media.</p>
+          <p class="fs-2 fw-bold">Thank you for your interest! </p>
+         <p>Our team will get in touch at  after downloading our case-studies</p>
+          <form action="/downloadcase-studies" method="post" class="position-relative">
+            <input class="form-control popupBg w-100 py-3 ps-4 pe-5" type="email" name="email" placeholder="Enter your email " required>
+            <button type="submit" id="downloadpdfbutton" class="btn btn-danger py-2 position-absolute top-0 end-0 mt-2 me-2">Download PDF</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var button = document.getElementById('open_modal');
+      var welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'));
+
+      button.addEventListener('click', function() {
+        welcomeModal.show();
+      });
+    });
+  </script>
+
+  <script>
+    document.getElementById('downloadpdfbutton').addEventListener('click', function() {
+      var pdfFilePath = 'public/images/CaseStudy.pdf';
+      var link = document.createElement('a');
+      link.href = pdfFilePath;
+      link.download = pdfFilePath.split('/').pop();
+      link.click();
+    });
+  </script>
+
     {{>recaptch}}
     
     {{>footer}}
