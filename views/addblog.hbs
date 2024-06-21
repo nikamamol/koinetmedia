@@ -96,11 +96,12 @@
             </div>
         </div>
     </div>
+    
 
     <script>
     // Function to check if user is authenticated (has token in localStorage)
 const isAuthenticated = () => {
-    return localStorage.getItem('token') !== null;
+    return localStorage.getItem('RegisterUser') !== null;
 };
 
 // Move the tinymce.init into the fetchAddBlogPage function
@@ -108,7 +109,7 @@ const fetchAddBlogPage = () => {
     fetch('/addblog', {
         method: 'GET',
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('RegisterUser')}`
         }
     })
     .then(response => {
@@ -138,7 +139,7 @@ const fetchAddBlogPage = () => {
 
 })
     .catch(error => {
-        console.error('Unauthorized:', error.message);
+        {{!-- console.error('Unauthorized:', error.message); --}}
         window.location.href = '/login'; // Redirect to login page
     });
 };

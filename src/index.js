@@ -24,7 +24,6 @@ app.use(
 
 app.use(express.json());
 app.use(fileUpload());
-
 app.use(
     express.urlencoded({
         extended: false,
@@ -168,6 +167,7 @@ app.post('/api/addblog', (req, res) => {
                 console.error('Error inserting blog post:', err);
                 return res.status(500).json({ error: 'Error inserting blog post' });
             }
+
             res.status(200).json({ message: 'Blog created successfully' });
         });
     } else if (req.body.imageUrl) {
@@ -223,6 +223,7 @@ app.get('/api/blog/:id', (req, res) => {
         }
     });
 });
+
 
 app.get("/getContact", (req, res) => {
     db.getAllContactFormEntries((err, entries) => {
