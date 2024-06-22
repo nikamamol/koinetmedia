@@ -6,7 +6,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node src/index.js -e js/hbs",
-        "build": "npm install && npm install --prefix client && npm run build --prefix client"
+        "build": "npm run build"
     },
     "keywords": [],
     "author": "webdev",
