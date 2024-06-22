@@ -1,5 +1,5 @@
 {
-    "name": "web-dev-portfolio",
+    "name": "koinetmediaweb",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -23,7 +23,6 @@
         "fs": "^0.0.1-security",
         "hbs": "^4.2.0",
         "jsonwebtoken": "^9.0.2",
-        "mongoose": "^6.8.2",
         "mysql": "^2.18.1",
         "nodemailer": "^6.9.13",
         "nodemon": "^3.1.3"
